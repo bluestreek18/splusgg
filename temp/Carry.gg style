@@ -1,0 +1,8 @@
+Carry.gg style
+- Show win rate guesstimate based on wr of each player on champ and wr of teamcomp. Also can factor in win streaks per player as well as wr per player per champ + if on red or blue side & the wr of that champ this patch. Pull data for champ wr from champion.gg???
+
+- Show badges per player for their winstreak/loss streak etc. Show if level 5 on champ etc etc. Show each players win rate on that champ vs the champ they are laning against & || against enemy champs in general.
+
+- Show bot lane comp scores. For example Janna/Ez - 60% win rate and have #1 bot lane badge.
+
+- Show data for how early deaths lead to losses extra. I think full match stats available. IE. Early death vs riven = loss and exact timing. Same with early cs denail early kills etc

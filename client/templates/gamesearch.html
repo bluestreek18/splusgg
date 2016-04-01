@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="main col-md-12 .jumbotron vertical-center">
+		<div class="search col-md-6">
+			<div class="form-group">
+
+	  		<form name="findgame" ng-submit="submit()">
+				  <fieldset class="form-group">
+				    <span id="summonername">Welcome to S+ gg</span>
+				    <input type="search" ng-model="text" class="form-control" id="searchbox" placeholder="Enter Summoner Name!" ng-minlength='5' required>
+				    <small class="text-muted" ng-show="error">{{error}}</small>
+				  </fieldset>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>

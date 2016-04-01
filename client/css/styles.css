@@ -1,0 +1,140 @@
+@font-face { font-family: Bebas; src: url('../fonts/BebasNeue.otf'); }
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+}
+
+.search {
+	font-family: Bebas;
+	color: white;
+	margin: auto;
+
+	text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+               0px 8px 13px rgba(0,0,0,0.1),
+               0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.form-group {
+	margin: auto;
+}
+
+#mainbg {
+  background: url(../img/bg_sol.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.navbar {
+	background: rgba(0, 0, 0, 0.7);
+}
+
+footer {
+	text-align: center;
+}
+
+.footerdiv {
+	padding-right: 200px;
+	padding-left: 200px;
+	background: rgba(0,0,0,0.7);
+	color: white;
+}
+
+#summonername {
+	font-size: 2.0em;
+}
+
+small {
+	padding-left: 1px;
+}
+
+#playerbox {
+	display: inline-block;
+	/*background: rgba(0,0,0,0.50);*/
+  overflow: hidden;
+  height: 100%;
+  z-index: 2;
+}
+
+.profilesize {
+	width: 200px;
+}
+
+.bans {
+	align: center;
+	height: 50px;
+}
+
+.teamblue {
+	padding-top: 100px;
+}
+
+.message_username {
+	position: absolute;
+}
+
+.summoners {
+	padding-top: 20px;
+}
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:center;
+    /* inline-block space fix */
+    /*margin-right:-2px;*/
+}
+
+.message_username {
+	position: inherit;
+	text-align: center;
+	font-family: Bebas;
+	color: white;
+}
+
+#teamsbg {
+	background: rgba(0,0,0,0.7);
+}
+
+.divisor {
+	text-align: center;
+}
+
+.txtoverlay {
+	text-shadow: 2px 2px 8px #000000;
+	position: absolute;
+	color: white;
+}
+
+.banrates {
+	text-shadow: 2px 2px 8px #000000;
+	color: white;
+	position: absolute;
+	display: inline-flex;
+}
+
+time {
+	color:white;
+}
+
+p {
+	color: white;
+}
+
+.champion-winloss {
+	color: white;
+}
+
+.tooltip.redbadge {
+	color: red;
+}
