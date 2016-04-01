@@ -13,20 +13,20 @@ app.listen(process.env.PORT || 3005, function() {
 
 app.get('/api/initialgamedata', function(req, res) {
 	db.getPlayerId(req.query.name).then(function(summoner) {
-		console.log('should have found player in db here, summoner: ', summoner)
+		//console.log('should have found player in db here, summoner: ', summoner)
 		return summoner;
 	})
 	.then(function(summoner) {
-		Riot.getCurrentGame(summoner[req.query.name].id).then(function(data) {
-			console.log('looked up summoner from cached name. should not say performing api blah');
-			res.send(data);
+		Riot.getCurrentGame(summoner[req.query.name].id).then(function(gamedata) {
+			//console.log('looked up summoner from cached name. should not say performing api blah');
+			res.send(gamedata);
 		})
 		.catch(function(err) {
 			res.send('Summoner not In Game!');
 		})	
 	})
 	.catch(function(err) {
-		console.log('summoner was not in db!, performing api lookup!')
+		//console.log('summoner was not in db!, performing api lookup!')
 		Riot.getSummonerID(req.query.name)
 		.then(function(idObj) {
 			return idObj;
@@ -45,10 +45,8 @@ app.get('/api/initialgamedata', function(req, res) {
 });
 
 app.get('/api/summonerchampionstats', function(req, res) {
-	//Add check database before api query!
-	Riot.getSummonerChampionStats(req.query.id, req.query.champid).then(function(data) {
-		console.log('found champ stats & sending!')
-		res.send(data);
+	Riot.getSummonerChampionStats(req.query.id, req.query.champid).then(function(champdata) {
+		res.send(champdata);
 	})
 	.catch(function(err) {
 		console.log('champ stats error!!!', err);
@@ -58,9 +56,8 @@ app.get('/api/summonerchampionstats', function(req, res) {
 });
 
 app.get('/api/championstaticdata', function(req, res) {
-	console.log('query = ', req.query.champName);
-	db.getOverallChampionStats(req.query.champName).then(function(data) {
-		res.send(data);
+	db.getOverallChampionStats(req.query.champName).then(function(statdata) {
+		res.send(statdata);
 	})
 	.catch(function(err) {
 		res.send(err);

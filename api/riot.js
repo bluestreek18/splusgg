@@ -33,7 +33,7 @@ exports.getCurrentGame = function(id) {
 	return new Promise(function(resolve, reject) {
 		req.get('https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/NA1/' + id + Key.apiKey, 
 			function(err, resp, body) {
-				console.log('statusCode getCurrentGame!: ', resp.statusCode);
+				//console.log('statusCode getCurrentGame!: ', resp.statusCode);
 				if(err || resp.statusCode !== 200) {
 					reject(err);
 					return;
@@ -95,7 +95,6 @@ exports.getSummonerChampionStats = function(summid, champid) {
 			resolve(resultdata);
 		})
 		.catch(function() {
-			//console.log('no existing stats for player calling api!');
 			req.get('https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/' + summid + '/ranked?season=SEASON2016&' + Key.apiKey.slice(1),
 				function(err, resp, body) {
 					if(err || resp.status_code === 404) {
@@ -104,9 +103,13 @@ exports.getSummonerChampionStats = function(summid, champid) {
 						return;
 					}
 
-					var result = JSON.parse(body);
-					result = Process.processSummonerChampionData(result, champid);  //Process all data but just return the stats for the champ user is playing!
-					resolve(result);
+					Process.processSummonerChampionData(JSON.parse(body), champid).then(function(ret) {
+						console.log(ret);
+						resolve(ret);
+					})
+					.catch(function(err) {
+						reject(err);
+					})
 				})
 		})
 	})

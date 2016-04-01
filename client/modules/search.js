@@ -5,8 +5,12 @@ angular.module('splus.search', [])
 		$scope.error = '';
 
 		$scope.submit = function() {
+			console.log(DataHandler);
 			if($scope.text !== undefined && typeof $scope.text === 'string') {
-				APIs.getGameInfo($scope.text).then(function(resp) {
+				var noSpaces = $scope.text;
+				noSpaces = noSpaces.split(' ').join('');
+
+				APIs.getGameInfo(noSpaces).then(function(resp) {
 
 					if(!resp.data.hasOwnProperty('participants')) {
 						$scope.error = resp.data;
@@ -19,7 +23,6 @@ angular.module('splus.search', [])
 				})
 				.catch(function(err) {
 					$scope.error = 'Summoner Not in Game!';
-					console.log(err);
 				})
 			}
 		}

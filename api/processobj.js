@@ -18,28 +18,34 @@ exports.addImageData = function(obj) {
 }
 
 exports.processSummonerChampionData = function(obj, champid) {
-  if(!obj) return;
-  var res = {};
-  var ind = 0;
-  obj.champions.forEach(function(val, index) {
-    if(val.id !== 0) {
-      if(val.id === champid) { ind = index; }
-      val.name = imgReference.data[val.id].key;
-      val.fullName = imgReference.data[val.id].name;
-      val.stats.winRate = (val.stats.totalSessionsWon / val.stats.totalSessionsPlayed * 100).toFixed(2);
+  return new Promise(function(resolve, reject) {
+    if(!obj) {
+      reject(obj);
     }
-  })
 
-  db.insertPlayerChampionStats(obj).then(function(data) {
-    console.log('champ data insert success!');
-  })
-  .catch(function(err) {
-    console.log('champ data insert failed', err);
-    resolve(data);
-  })
+    var res = {};
+    for(var i = 0; i < obj.champions.length; ++i) {
+      var item = obj.champions[i];
 
-  res = obj.champions[ind];
-  return res;
+      if(item.id !== 0) {
+        if(champid == item.id) {
+          res = item;
+        }
+        item.name = imgReference.data[item.id].key;
+        item.fullName = imgReference.data[item.id].name;
+        item.stats.winRate = (item.stats.totalSessionsWon / item.stats.totalSessionsPlayed * 100).toFixed(2);
+      }
+    }
+
+    db.insertPlayerChampionStats(obj).then(function(data) {
+      console.log('champ data insert success!');
+    })
+    .catch(function(err) {
+      console.log('champ data insert failed', err);
+    })
+
+    resolve(res);
+  })
 }
 
 // {"ozzieisaacs": {

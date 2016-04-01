@@ -6,7 +6,8 @@ angular.module('splus', [
 	'splus.teams',
 	'splus.search',
   'splus.badges',
-	'splus.nav'
+	'splus.nav',
+  'splus.datastore'
 ])
 .config(['$stateProvider', '$urlRouterProvider', 
   function($stateProvider, $urlRouterProvider) {

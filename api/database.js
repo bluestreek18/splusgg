@@ -122,9 +122,7 @@ exports.insertPlayerChampionStats = function(obj) {
 //Champion.gg static data || http://api.champion.gg/stats/
 exports.getOverallChampionStats = function(champ) {
 	return new Promise(function(resolve, reject) {
-		console.log('searching static db champ : =', champ);
 		db.collection('championstaticwinratedata').findOne({key: champ}, function(err, result) {
-			console.log('err & res = ', err, result)
 			if(err) {
 				reject(err);
 				return;
