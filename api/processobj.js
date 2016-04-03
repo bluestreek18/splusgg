@@ -1,11 +1,14 @@
 var db = require('./database');
 
 exports.addImageData = function(obj) {
+  obj.idArray = [];
 
 	obj.participants.forEach(function(val, index) {
     var champId = val.championId;
     var summ1 = val.spell1Id;
     var summ2 = val.spell2Id;
+    
+    obj.idArray.push(champId);
     val.imageUrl = imgReference.data[champId].key;
     val.championName = imgReference.data[champId].name;
     val.summonerOneUrl = summonerReference.data[summ1].key;
@@ -28,6 +31,7 @@ exports.processSummonerChampionData = function(obj, champid) {
       var item = obj.champions[i];
 
       if(item.id !== 0) {
+        console.log(champid, item.id)
         if(champid == item.id) {
           res = item;
         }
@@ -47,14 +51,6 @@ exports.processSummonerChampionData = function(obj, champid) {
     resolve(res);
   })
 }
-
-// {"ozzieisaacs": {
-//    "id": 45807652,
-//    "name": "Ozzie Isaacs",
-//    "profileIconId": 982,
-//    "revisionDate": 1457323950000,
-//    "summonerLevel": 30
-// }}
 
 var imgReference = { "data" : { "1" : { "id" : 1,
           "image" : { "full" : "Annie.png",

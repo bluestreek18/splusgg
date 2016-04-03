@@ -34,10 +34,22 @@ angular.module('splus.apis', [])
       })
     };
 
+    var getSummonerLeagueData = function(summonerIds) {
+      return $http({
+        method: 'GET',
+        url: '/api/summonerleaguedata',
+        params: { ids: summonerIds }
+      })
+      .then(function(resp) {
+        return resp;
+      })
+    };
+
   return {
   	getGameInfo: getGameInfo,
   	getSummonerChampStats: getSummonerChampStats,
-    getChampStaticData: getChampStaticData
+    getChampStaticData: getChampStaticData,
+    getSummonerLeagueData: getSummonerLeagueData
   }
 
 })

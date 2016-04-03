@@ -2,6 +2,15 @@ angular.module('splus.datastore', [])
 	.factory('BuildData', function(DataHandler, APIs, Badges) {
 		//Set it so the team of DataHandler.primaryPlayer is on top !!!
 
+		var getTierData = function() {
+			APIs.getSummonerLeagueData(DataHandler.gameData.data.idArray).then(function(data) {
+				console.log('data from league tier data api call', data);
+				DataHandler.gameData.data.participants.forEach(function(val, index) {
+					//val[data].summonerTier = data[val.id];
+				})
+			})
+		}
+
 		var buildPlayerObjects = function() {
 			DataHandler.gameData.data.participants.forEach(function(val, index) {
 			val.teamId === 100 ? DataHandler.blueteam.push(val) : DataHandler.redteam.push(val);
@@ -12,9 +21,6 @@ angular.module('splus.datastore', [])
 
 			if(val.teamId === 100) {
 				APIs.getSummonerChampStats(val.summonerId, val.championId).then(function(resp) {
-					console.log('championID SummChampStats = ', val.championId);
-					console.log('VAL ======== ', val);
-					console.log('REPSONSEFROMAPI = ', resp.data);
 					val.summonerChampStats = resp.data;
 					Badges.createBadgeProfiles(val);
 				});

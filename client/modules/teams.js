@@ -9,6 +9,7 @@ angular.module('splus.teams', [])
 		$rootScope.bgid = 'teamsbg';
 
 		$scope.insertData = function() {
+			BuildData.getTierData();
 			BuildData.buildPlayerObjects();
 			console.log(DataHandler);
 		}

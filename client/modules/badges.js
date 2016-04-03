@@ -1,6 +1,7 @@
 angular.module('splus.badges', [])
 	.factory('Badges', function() {
 		var createBadgeProfiles = function(champ) {
+			debugger
 			if(champ) {
 				champ.badges = [];
 				testGamesPlayed(champ);
