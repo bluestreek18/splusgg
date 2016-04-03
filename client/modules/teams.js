@@ -5,12 +5,13 @@ angular.module('splus.teams', [])
 		$scope.redteam = DataHandler.redteam;
 		$scope.bluebans = DataHandler.bluebans;
 		$scope.redbans = DataHandler.redbans;
+		$scope.highestTier = DataHandler.primaryPlayer.tier;
 		$scope.gameStarted = $scope.data.gameStartTime;
 		$rootScope.bgid = 'teamsbg';
 
 		$scope.insertData = function() {
-			BuildData.getTierData();
 			BuildData.buildPlayerObjects();
+			BuildData.getTierData();
 			console.log(DataHandler);
 		}
 

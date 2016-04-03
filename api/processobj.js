@@ -7,8 +7,8 @@ exports.addImageData = function(obj) {
     var champId = val.championId;
     var summ1 = val.spell1Id;
     var summ2 = val.spell2Id;
-    
-    obj.idArray.push(champId);
+
+    obj.idArray.push(val.summonerId);
     val.imageUrl = imgReference.data[champId].key;
     val.championName = imgReference.data[champId].name;
     val.summonerOneUrl = summonerReference.data[summ1].key;
@@ -31,7 +31,6 @@ exports.processSummonerChampionData = function(obj, champid) {
       var item = obj.champions[i];
 
       if(item.id !== 0) {
-        console.log(champid, item.id)
         if(champid == item.id) {
           res = item;
         }

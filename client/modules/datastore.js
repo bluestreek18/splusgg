@@ -3,10 +3,19 @@ angular.module('splus.datastore', [])
 		//Set it so the team of DataHandler.primaryPlayer is on top !!!
 
 		var getTierData = function() {
-			APIs.getSummonerLeagueData(DataHandler.gameData.data.idArray).then(function(data) {
-				console.log('data from league tier data api call', data);
+			var query = DataHandler.gameData.data.idArray.toString();
+			APIs.getSummonerLeagueData(query).then(function(resp) {
 				DataHandler.gameData.data.participants.forEach(function(val, index) {
-					//val[data].summonerTier = data[val.id];
+					debugger
+					var target = resp.data[val.summonerId]['0']
+					val.tierData = target.entries['0'];
+					val.tierData.name = target.name;
+					val.tierData.queue = target.queue;
+					val.tierData.tier = target.tier.toLowerCase();
+					val.tierData.division = target.entries['0'].division.toLowerCase();
+					if(val.summonerName.toLowerCase() === DataHandler.primaryPlayer.name.toLowerCase()) {
+						DataHandler.primaryPlayer.tier = val.tierData.tier;
+					}		
 				})
 			})
 		}
@@ -21,8 +30,13 @@ angular.module('splus.datastore', [])
 
 			if(val.teamId === 100) {
 				APIs.getSummonerChampStats(val.summonerId, val.championId).then(function(resp) {
-					val.summonerChampStats = resp.data;
-					Badges.createBadgeProfiles(val);
+					if(resp.data) {
+						val.summonerChampStats = resp.data;
+						Badges.createBadgeProfiles(val);
+					} else {
+						console.log('WARN: No summonerChampStats found!')
+					}
+					
 				});
 			}
 		})
@@ -37,7 +51,8 @@ angular.module('splus.datastore', [])
 	}
 
 	return {
-		buildPlayerObjects: buildPlayerObjects
+		buildPlayerObjects: buildPlayerObjects,
+		getTierData: getTierData
 	}
 		
 	})
@@ -47,6 +62,6 @@ angular.module('splus.datastore', [])
 		this.redteam = [];
 		this.bluebans = [];
 		this.redbans = [];
-		this.primaryPlayer = { name: undefined };
+		this.primaryPlayer = { name: undefined, tier: undefined };
 
 	})

@@ -104,7 +104,6 @@ exports.getSummonerChampionStats = function(summid, champid) {
 					}
 
 					Process.processSummonerChampionData(JSON.parse(body), champid).then(function(ret) {
-						console.log(ret);
 						resolve(ret);
 					})
 					.catch(function(err) {
@@ -120,12 +119,13 @@ exports.getSummonerLeagueData = function(summonerIds) {
 	return new Promise(function(resolve, reject) {
 		req.get('https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + summonerIds + '/entry' + Key.apiKey,
 			function(err, resp, body) {
-				if(err || resp.status_code === 404) {
+				console.log('get league data code: === ', resp.statusCode)
+				if(err || resp.statusCode === 404) {
 						reject(err);
 						return;
 				}
 				resolve(body);
-			}
+			})
 	})
 }
 

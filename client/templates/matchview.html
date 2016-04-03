@@ -12,15 +12,16 @@
                       <span class="txtoverlay">
                       <p>{{player.champStaticData.general.overallPosition}}</p>
                       <p>{{player.champStaticData.general.winPercent}}</p>
+                      <img class="tiericon" ng-src="../img/tier-icons/tier_icons/{{player.tierData.tier}}_{{player.tierData.division}}.png">
                       </span>
                         <img class="profilesize" ng-src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{player.imageUrl}}_0.jpg">
                         <p class="message_username">{{player.summonerName}}</p>
                         <a class="summoners" href=""></a>
                             <div class="summoners">
-                                <img ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerOneUrl}}.png">
-                                <img ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerTwoUrl}}.png">
+                                <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/profileicon/{{player.profileIconId}}.png">
+                                <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerOneUrl}}.png">
+                                <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerTwoUrl}}.png">
                             </div>
-                            <img ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/profileicon/{{player.profileid}}.png">
                             <span class="champion-winloss">Win Rate {{player.summonerChampStats.stats.winRate}}%</span>
                             <span class="trajectory">{{player.last_twenty}}</span>
                           <span class="roles">{{player.common_roles}}</span>
@@ -33,7 +34,8 @@
 
 
         <div class="divisor">
-        <hr>
+        {{highestTier}}
+        <img ng-src="../img/tier-icons/base_icons/{{highestTier}}.png">
         </div>
 
         <div class="teamred row row-centered">

@@ -83,6 +83,10 @@ small {
 	padding-top: 20px;
 }
 
+.sumimages {
+	width: 3em;
+}
+
 .row-centered {
     text-align:center;
 }
@@ -137,4 +141,8 @@ p {
 
 .tooltip.redbadge {
 	color: red;
+}
+
+.tiericon {
+	width: 25%;
 }

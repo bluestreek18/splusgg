@@ -1,5 +1,5 @@
 angular.module('splus.search', [])
-	.controller('SearchController', function($scope, APIs, $state, $rootScope) {
+	.controller('SearchController', function($scope, APIs, $state, $rootScope, DataHandler) {
 		$rootScope.bgid = 'mainbg';
 		$scope.text = '';
 		$scope.error = '';
