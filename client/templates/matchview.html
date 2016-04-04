@@ -34,8 +34,16 @@
 
 
         <div class="divisor">
-        {{highestTier}}
-        <img ng-src="../img/tier-icons/base_icons/{{highestTier}}.png">
+          <div class="teamblue row row-centered">
+            <div class="col-xs-4 col-md-2 col-half-offset col-centered" ng-repeat="matchup in matchups">
+              <div class="matchupstatbox">
+                <p>{{matchup.versus}}</p>
+                <p>{{matchup.role}}</p>
+                <p>{{matchup.games}}</p>
+                <p>{{matchup.winRate}}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="teamred row row-centered">

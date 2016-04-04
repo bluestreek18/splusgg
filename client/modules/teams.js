@@ -2,6 +2,7 @@ angular.module('splus.teams', [])
 	.controller('TeamController', function($rootScope, $scope, DataHandler, BuildData, Badges, APIs) {
 		var gameData = DataHandler.gameData;
 		$scope.data = gameData.data;
+		$scope.matchups = DataHandler.matchups;
 		$scope.blueteam = DataHandler.blueteam;
 		$scope.redteam = DataHandler.redteam;
 		$scope.bluebans = DataHandler.bluebans;
@@ -9,6 +10,7 @@ angular.module('splus.teams', [])
 		$scope.highestTier = DataHandler.primaryPlayer.tier;
 		$scope.gameStarted = $scope.data.gameStartTime;
 		$rootScope.bgid = 'teamsbg';
+		console.log(DataHandler.gameData)
 
 		$scope.insertData = function() {
 			var resp;
@@ -20,6 +22,7 @@ angular.module('splus.teams', [])
 				console.log(err);
 			})
 			.then(function(result) {
+				console.log('stati data result = ', result)
 				return BuildData.processPlayers(result, gameData, resp);
 			})
 			.catch(function(err) {
@@ -38,8 +41,6 @@ angular.module('splus.teams', [])
 				})
 				var matchupPromises = [];
 
-				DataHandler.blueteam = DataHandler.blueteam.sort(BuildData.sortRoles);
-				//DataHandler.redteam = DataHandler.redteam.sort(BuildData.sortRoles); // Disabled due to api limit!
 				gameData.data.participants.forEach(function(val, ind) {
 					if(ind < 5) {
 						champid1 = DataHandler.blueteam[ind].championName;
@@ -63,7 +64,7 @@ angular.module('splus.teams', [])
 				//process both botlanes as one normalized matchup
 				//add function to datastorejs
 				BuildData.processMatchupData(matchupArray);
-				
+				console.log('Matchups! === ', $scope.matchups)
 			})
 			.catch(function(err) {
 				console.log('Insert Data Error!', err);

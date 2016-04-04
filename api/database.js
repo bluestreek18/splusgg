@@ -188,8 +188,27 @@ var getNewStaticdata = function() {
 			console.log('update failed!', err);
 		})
 	})
+}
+
+exports.getRoles = function(champ) {
+	var roles = [];
+
+	db.collection('championstaticwinratedata').find({name: champ}).toArray()
+		.then(function(data) {
+			if(data.length > 1) {
+				data.forEach(function(val, ind) {
+					roles.push(val.role)
+				})
+			} else {
+				roles.push(data[0].role);
+			}
+
+			return Promise.resolve(roles);
+		})
 
 }
+
+
 
 getNewStaticdata(); // Run on server start!
 

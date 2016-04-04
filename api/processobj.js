@@ -18,10 +18,14 @@ exports.addImageData = function(obj) {
   obj.bannedChampions.forEach(function(val, index) {
     val.championUrl = imgReference.data[val.championId].key;
   })
+
+  obj.participants = sortParticipantsByRole(obj.participants);
+
 }
 
 exports.processSummonerChampionData = function(obj, champid) {
   return new Promise(function(resolve, reject) {
+    console.log(obj)
     if(!obj) {
       reject(obj);
     }
@@ -50,6 +54,56 @@ exports.processSummonerChampionData = function(obj, champid) {
     resolve(res);
   })
 }
+
+var sortParticipantsByRole = function(par) {
+  var sortedblue = [];
+  var sortedred = [];
+
+  par.forEach(function(val, ind) {
+    (val.teamId === 100) ? sortedblue.push(val) : sortedred.push(val);
+    val.roles = db.getRoles(val);
+  })
+
+  sortedblue = checkTeam(sortedblue);
+  sortedred = checkTeam(sortedred);  
+
+  return sortedblue.concat(sortedred);
+}
+
+// Sorts teams by role for matchup comparison champ gg
+var checkTeam = function(team) {
+  var iReset = 0;
+  var roles = ['Top', 'Middle', 'Support', 'ADC', 'Jungle'];
+  var sorted = [];
+  var testRole = function(role, summoner, pos) {
+    if(team[i].roles.includes(role) && (team[i].summonerOneUrl === summoner || summonerTwoUrl === summoner) && roles.includes(role)) {
+      sorted[pos] = team[i];
+      team.splice(i, 1);
+      roles.pop();
+      i = 0;
+      ++iReset;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  for(var i = 0; i < roles.length; ++i) {
+    if(iReset > 6) { return; } //Check for infinite loop!
+    testRole('Jungle', 'SummonerSmite', 0);
+    testRole('ADC', 'SummonerHeal', 1)
+    testRole('Top', 'SummonerTeleport', 2)
+    testRole('Support', 'SummonerExhaust', 3)
+    if(roles.length === 1) {
+      sorted[4] = team[i];
+      roles.length = 0;
+    }
+  }
+
+  return sorted;
+}
+
+
 
 var imgReference = { "data" : { "1" : { "id" : 1,
           "image" : { "full" : "Annie.png",

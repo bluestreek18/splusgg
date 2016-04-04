@@ -89,12 +89,13 @@ exports.getMatchById = function(matchId) {
 exports.getSummonerChampionStats = function(summid, champid) {
 	return new Promise(function(resolve, reject) {
 		db.getPlayerChampStats(summid, champid).then(function(resultdata) {
-			//console.log('found existing stats for player!');
+			console.log('found existing stats for player!');
 			resolve(resultdata);
 		})
 		.catch(function() {
 			req.get('https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/' + summid + '/ranked?season=SEASON2016&' + Key.apiKey.slice(1),
 				function(err, resp, body) {
+					// console.log('response body', body)
 					if(err || resp.status_code === 404) {
 						console.log('Summoner stats lookup FAILED!!!!')
 						reject(err);

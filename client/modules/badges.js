@@ -12,6 +12,12 @@ angular.module('splus.badges', [])
 		}
 
 		var testGamesPlayed = function(obj) {
+			if(!obj.summonerChampStats.hasOwnProperty('stats')) { 
+				player.summonerChampStats.stats = {};
+				player.summonerChampStats.stats.winRate = 'No Data for this Player.';
+				return;
+			} //Are there stats for this player? Maybe first game?
+
 			var played = obj.summonerChampStats.stats.totalSessionsPlayed;
 			var pString = played + ' Games Played!';
 			if(played === 0) {
@@ -73,7 +79,6 @@ angular.module('splus.badges', [])
 	}
 
 	var testLeagueData =  function(obj) {
-		debugger
 		var tstats = obj.tierData;
 		var lstats = obj.tierData.leaguePoints;
 		var rankedWinRate = ((obj.tierData.wins / (obj.tierData.losses + obj.tierData.wins)) * 100).toFixed(2);

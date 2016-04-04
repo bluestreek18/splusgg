@@ -7,9 +7,6 @@ angular.module('splus.apis', [])
         url: '/api/initialgamedata',
         params: { "name": playerName }
       })
-      .then(function(resp) {
-        return resp;
-      })
   	};
 
   	var getSummonerChampStats = function(playerid, champid) {
@@ -17,9 +14,6 @@ angular.module('splus.apis', [])
         method: 'GET',
         url: '/api/summonerchampionstats',
         params: { id: playerid, champid: champid }
-      })
-      .then(function(resp) {
-        return resp;
       })
   	};
 
@@ -29,9 +23,6 @@ angular.module('splus.apis', [])
         url: '/api/championstaticdata',
         params: { champNames: champNames }
       })
-      .then(function(resp) {
-        return resp;
-      })
     };
 
     var getSummonerLeagueData = function(summonerIds) {
@@ -39,9 +30,6 @@ angular.module('splus.apis', [])
         method: 'GET',
         url: '/api/summonerleaguedata',
         params: { ids: summonerIds }
-      })
-      .then(function(resp) {
-        return resp;
       })
     };
 
@@ -51,9 +39,6 @@ angular.module('splus.apis', [])
         method: 'GET',
         url: '/api/champmatchupdatagg',
         params: { name1: champname1, name2: champname2 }
-      })
-      .then(function(resp) {
-        return resp;
       })
     };
 
