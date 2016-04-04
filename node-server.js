@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var Riot = require('./api/riot');
 var db = require('./api/database');
 var Logic = require('./api/serverlogic');
+var ChampGG = require('./api/championgg');
 
 app.use('/', express.static('client'));
 app.use(bodyParser.json());
@@ -33,8 +34,8 @@ app.get('/api/summonerchampionstats', function(req, res) {
 });
 
 app.get('/api/championstaticdata', function(req, res) {
-	db.getOverallChampionStats(req.query.champName).then(function(statdata) {
-		res.send(statdata);
+	Logic.getStaticAll(req.query.champNames).then(function(results) {
+		res.send(results);
 	})
 	.catch(function(err) {
 		res.send(err);
@@ -44,6 +45,18 @@ app.get('/api/championstaticdata', function(req, res) {
 
 app.get('/api/summonerleaguedata', function(req, res) {
 	Riot.getSummonerLeagueData(req.query.ids).then(function(data) {
+		res.send(data);
+	})
+	.catch(function(err) {
+		res.send(err);
+	})
+
+});
+
+app.get('/api/champmatchupdatagg', function(req, res) {
+	console.log(req.query.name1, req.query.name2)
+	ChampGG.getChampionMatchupData(req.query.name1, req.query.name2).then(function(data) {
+		console.log('MATCHUP DATA === ', data)
 		res.send(data);
 	})
 	.catch(function(err) {

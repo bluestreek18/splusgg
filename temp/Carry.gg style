@@ -6,3 +6,6 @@ Carry.gg style
 - Show bot lane comp scores. For example Janna/Ez - 60% win rate and have #1 bot lane badge.
 
 - Show data for how early deaths lead to losses extra. I think full match stats available. IE. Early death vs riven = loss and exact timing. Same with early cs denail early kills etc
+
+- Add Item reccomendation by most winning from champ.gg
+- Mabye better to pull BSON files from championgg github

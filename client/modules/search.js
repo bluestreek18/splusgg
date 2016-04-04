@@ -7,7 +7,7 @@ angular.module('splus.search', [])
 		$scope.submit = function() {
 		if($scope.text !== undefined && typeof $scope.text === 'string') {
 			var noSpaces = $scope.text;
-			noSpaces = noSpaces.split(' ').join('');
+			noSpaces = noSpaces.replace(/\s+/g, '');
 
 			APIs.getGameInfo(noSpaces).then(function(resp) {
 				if(!resp.data.hasOwnProperty('participants')) {

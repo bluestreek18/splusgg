@@ -1,6 +1,8 @@
 var db = require('mongodb').Db;
 var Moment = require('../node_modules/moment/moment');
 var timeNow = Moment();
+var Riot = require('./riot');
+var ChampGG = require('./championgg');
 
 //We need to work with "MongoClient" interface in order to connect to a mongodb server.
 var MongoClient = require('mongodb').MongoClient;
@@ -133,8 +135,65 @@ exports.getOverallChampionStats = function(champ) {
 }
 
 
+// Static Data Functions Here!
+exports.insertChampGGStatic = function(obj) {
+	return new Promise(function(resolve, reject) {
+		db.collection('championstaticwinratedata').remove({});
+		var batch = db.collection('championstaticwinratedata').initializeOrderedBulkOp();
+		//declare new batch insert ~	150 inserts
+
+		for(var key in obj) {
+			obj[key].age = Date.now();
+			batch.insert(obj[key]);
+		}
+
+		batch.execute(function(err, result) {
+			if(err) {
+				reject(err);
+				return;
+			}
+			resolve(result);
+		})
+    
+	})
+}
+
+var getStaticDataAge = function() {
+	return new Promise(function(resolve, reject) {
+		db.collection('championstaticwinratedata').findOne({}, 
+			function(err, result) {
+				console.log('moment! > 3', timeNow.diff(result.age, 'days') > 3);
+				if(err || timeNow.diff(result.age, 'days') > 3) {
+					reject(err);
+					return;
+				}
+				resolve(result);
+			})
+	})
+}
+
+var getNewStaticdata = function() {
+	getStaticDataAge().then(function(data) {
+		console.log('static data ok!', data.age);
+	})
+	.catch(function(err) {
+		ChampGG.updateChampionStaticData().then(function(data) {
+			var parsed = JSON.parse(data);
+			return exports.insertChampGGStatic(parsed);
+		})
+		.then(function(res) {
+			console.log('staticdata update successful!', res.nInserted);
+		})
+		.catch(function(err) {
+			console.log('update failed!', err);
+		})
+	})
+
+}
+
+getNewStaticdata(); // Run on server start!
+
 });
 
 
 
-// 	db.collection('gamesids').find({"gameId": 2136139141}, {"participants": "$all"})

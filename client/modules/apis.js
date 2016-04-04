@@ -23,11 +23,11 @@ angular.module('splus.apis', [])
       })
   	};
 
-    var getChampStaticData = function(champName) {
+    var getChampStaticData = function(champNames) {
       return $http({
         method: 'GET',
         url: '/api/championstaticdata',
-        params: { champName: champName }
+        params: { champNames: champNames }
       })
       .then(function(resp) {
         return resp;
@@ -45,11 +45,24 @@ angular.module('splus.apis', [])
       })
     };
 
+    var getChampionMatchupData = function(champname1, champname2) {
+      console.log('champs ==== ', champname1, champname2)
+      return $http({
+        method: 'GET',
+        url: '/api/champmatchupdatagg',
+        params: { name1: champname1, name2: champname2 }
+      })
+      .then(function(resp) {
+        return resp;
+      })
+    };
+
   return {
   	getGameInfo: getGameInfo,
   	getSummonerChampStats: getSummonerChampStats,
     getChampStaticData: getChampStaticData,
-    getSummonerLeagueData: getSummonerLeagueData
+    getSummonerLeagueData: getSummonerLeagueData,
+    getChampionMatchupData: getChampionMatchupData
   }
 
 })

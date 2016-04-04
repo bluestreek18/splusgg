@@ -32,3 +32,21 @@ exports.getGameSummoner = function(query) {
 		})
 	})
 }
+
+exports.getStaticAll = function(array) {
+	if(Array.isArray(array)) {
+		array = array.split(',');
+		var promiseArray = [];
+
+		array.forEach(function(val, ind) {
+			promiseArray.push(db.getOverallChampionStats(val));
+		})
+
+		console.log('get static all working!!!')
+		return Promise.all(promiseArray);
+	}
+	else {
+		return db.getOverallChampionStats(array);
+	}
+
+}

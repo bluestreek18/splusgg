@@ -13,7 +13,6 @@ exports.getSummonerID = function(name) {
 					reject(err);
 					return;
 				}
-				//console.log('found summoner id!: ', body);
 
 				var resultBody = JSON.parse(body);
 				db.insertPlayerIdObj(resultBody).then(function(data) {
@@ -21,7 +20,6 @@ exports.getSummonerID = function(name) {
 				})
 				.catch(function(err) {
 					resolve(resultBody, resp);
-					//console.log('db insert failed');
 				});
 			})
 	})
@@ -128,6 +126,10 @@ exports.getSummonerLeagueData = function(summonerIds) {
 			})
 	})
 }
+
+
+
+
 
 // https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/56892662/ranked?season=SEASON2016&api_key=af71b0eb-3864-47e2-85b7-d3ba30168220
 

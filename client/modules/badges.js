@@ -73,6 +73,7 @@ angular.module('splus.badges', [])
 	}
 
 	var testLeagueData =  function(obj) {
+		debugger
 		var tstats = obj.tierData;
 		var lstats = obj.tierData.leaguePoints;
 		var rankedWinRate = ((obj.tierData.wins / (obj.tierData.losses + obj.tierData.wins)) * 100).toFixed(2);
@@ -96,7 +97,7 @@ angular.module('splus.badges', [])
 				obj.badges.push({ display: 'Player in Series!' , tooltip: progress });
 			}
 		}
-		else if(100 - lstats < 16) {
+		else if(100 - lstats < 16 && (tstats.tier !== 'master' && tstats.tier !== 'challenger')) {
 			obj.badges.push({ display: 'One Win for Series!' , tooltip: lstats + ' LP!' }); //implicit coercion bois!!! kyle gg
 		}
 
