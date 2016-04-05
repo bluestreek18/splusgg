@@ -11,7 +11,8 @@ angular.module('splus.search', [])
 
 			APIs.getGameInfo(noSpaces).then(function(resp) {
 				if(!resp.data.hasOwnProperty('participants')) {
-					$scope.error = resp.data;
+					console.log(resp.data)
+					if(typeof resp.data === 'string') { $scope.error = resp.data; }
 				}
 				else {
 					DataHandler.primaryPlayer.name = $scope.text;

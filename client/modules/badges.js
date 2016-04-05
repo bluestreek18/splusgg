@@ -7,6 +7,7 @@ angular.module('splus.badges', [])
 				testMultiKills(champ);
 				testLeagueData(champ);
 			} else {
+				console.log('No Data to Process for Badges!', champ.championName);
 				return;
 			}
 		}

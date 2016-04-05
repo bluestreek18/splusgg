@@ -31,15 +31,24 @@ exports.getCurrentGame = function(id) {
 	return new Promise(function(resolve, reject) {
 		req.get('https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/NA1/' + id + Key.apiKey, 
 			function(err, resp, body) {
-				//console.log('statusCode getCurrentGame!: ', resp.statusCode);
+				console.log('statusCode getCurrentGame!: ', resp.statusCode);
+				console.log('raw request! === ', body);
 				if(err || resp.statusCode !== 200) {
 					reject(err);
 					return;
 				}
 
 				var result = JSON.parse(body);
+				if(result.bannedChampions.length === 0) {
+					reject('Not A Ranked Game!');
+				}
+				
 				Process.addImageData(result);
-				resolve(result, resp);
+				Process.sortParticipantsByRole(result.participants).then(function(data) {
+					result.participants = data;
+					resolve(result, resp);
+				})
+				
 			})
 	})
 }

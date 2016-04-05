@@ -191,26 +191,10 @@ var getNewStaticdata = function() {
 }
 
 exports.getRoles = function(champ) {
-	var roles = [];
-
-	db.collection('championstaticwinratedata').find({name: champ}).toArray()
-		.then(function(data) {
-			if(data.length > 1) {
-				data.forEach(function(val, ind) {
-					roles.push(val.role)
-				})
-			} else {
-				roles.push(data[0].role);
-			}
-
-			return Promise.resolve(roles);
-		})
-
+	return db.collection('championstaticwinratedata').find({"name": champ}, {"role": 1}).toArray();
 }
 
-
-
-getNewStaticdata(); // Run on server start!
+	getNewStaticdata(); // Run on server start!
 
 });
 

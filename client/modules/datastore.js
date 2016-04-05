@@ -21,10 +21,6 @@ angular.module('splus.datastore', [])
 		var buildPlayerObjects = function() {
 			var promiseArray = [];
 			DataHandler.gameData.data.participants.forEach(function(val, index) {
-				if(!blueteam[index]) {  // SORT HERE!
-					findSpot(val);
-				}
-
 				promiseArray.push(APIs.getChampStaticData(val.imageUrl));
 			})
 
@@ -97,8 +93,7 @@ angular.module('splus.datastore', [])
 			addBanStatic: addBanStatic,
 			processPlayers: processPlayers,
 			getSummonerChampionStats: getSummonerChampionStats,
-			processMatchupData: processMatchupData,
-			sortRoles: sortRoles
+			processMatchupData: processMatchupData
 		}
 
 	})

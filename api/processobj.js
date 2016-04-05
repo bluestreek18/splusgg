@@ -19,13 +19,10 @@ exports.addImageData = function(obj) {
     val.championUrl = imgReference.data[val.championId].key;
   })
 
-  obj.participants = sortParticipantsByRole(obj.participants);
-
 }
 
 exports.processSummonerChampionData = function(obj, champid) {
   return new Promise(function(resolve, reject) {
-    console.log(obj)
     if(!obj) {
       reject(obj);
     }
@@ -55,50 +52,89 @@ exports.processSummonerChampionData = function(obj, champid) {
   })
 }
 
-var sortParticipantsByRole = function(par) {
-  var sortedblue = [];
-  var sortedred = [];
+exports.sortParticipantsByRole = function(par) { //This function starts on successful data of cur game stats
+  return setRoles(par).then(function(roles) {
+    roles = roles.map(function(val, ind) {
+      return val.map(function(val) {
+        return val.role;
+      });
+    })
 
+    var sortedblue = [];
+    var sortedred = [];
+
+    roles.forEach(function(val, ind) {
+      par[ind].roles = roles[ind];
+      if(par[ind].teamId === 200) {
+        sortedred.push(par[ind]);
+      }
+      else {
+        sortedblue.push(par[ind]);
+      }
+    })
+
+    sortedblue = checkTeam(sortedblue.slice());
+    sortedred = checkTeam(sortedred.slice());
+    ptsd = sortedblue.concat(sortedred);
+
+    return ptsd;
+  })
+}
+
+var setRoles = function(par) {
+  var promises = [];
   par.forEach(function(val, ind) {
-    (val.teamId === 100) ? sortedblue.push(val) : sortedred.push(val);
-    val.roles = db.getRoles(val);
+    promises.push(db.getRoles(val.championName));
   })
 
-  sortedblue = checkTeam(sortedblue);
-  sortedred = checkTeam(sortedred);  
-
-  return sortedblue.concat(sortedred);
+  return Promise.all(promises);
 }
 
 // Sorts teams by role for matchup comparison champ gg
 var checkTeam = function(team) {
-  var iReset = 0;
   var roles = ['Top', 'Middle', 'Support', 'ADC', 'Jungle'];
+  var rolePos = ['Jungle', 'ADC', 'Top', 'Support', 'Middle'];
   var sorted = [];
-  var testRole = function(role, summoner, pos) {
-    if(team[i].roles.includes(role) && (team[i].summonerOneUrl === summoner || summonerTwoUrl === summoner) && roles.includes(role)) {
-      sorted[pos] = team[i];
+  var testRole = function(role, summoner) {
+    if(team[i].roles.indexOf(role) !== -1 && (team[i].summonerOneUrl === summoner || team[i].summonerTwoUrl === summoner) && roles.indexOf(role) !== -1) {
+      sorted[rolePos.indexOf(role)] = team[i];
       team.splice(i, 1);
-      roles.pop();
-      i = 0;
-      ++iReset;
-      return true;
-    } else {
+      roles.splice(roles.indexOf(role), 1);
+      return true
+    }
+    else {
       return false;
     }
   }
 
-  for(var i = 0; i < roles.length; ++i) {
-    if(iReset > 6) { return; } //Check for infinite loop!
-    testRole('Jungle', 'SummonerSmite', 0);
-    testRole('ADC', 'SummonerHeal', 1)
-    testRole('Top', 'SummonerTeleport', 2)
-    testRole('Support', 'SummonerExhaust', 3)
-    if(roles.length === 1) {
-      sorted[4] = team[i];
-      roles.length = 0;
+  for(var i = team.length - 1; i > 0; --i) {
+
+      if(testRole('Jungle', 'SummonerSmite'));
+      else if(team[i].roles.length === 1) {
+        sorted[rolePos.indexOf(team[i].roles[0])] = team[i];
+        roles.splice(roles.indexOf(team[i].roles[0]), 1);
+        team.splice(i, 1);
+      }
+      else if(testRole('ADC', 'SummonerHeal'));
+      else if(testRole('Top', 'SummonerTeleport'));
+      else if(testRole('Support', 'SummonerExhaust'));
+      else if(testRole('Middle', 'SummonerDot'));
+      else if(testRole('Middle', 'SummonerBarrier'));
+  }
+  
+  
+  for(var j = 0; j < 4; ++j) {
+    if(roles.length !== 0) {
+      var last = roles.shift();
+      if(sorted[rolePos.indexOf(last)] === undefined) {
+        sorted[rolePos.indexOf(last)] = team.pop();
+      }
+    }
+    if(!sorted[j] && team.length > 0) {
+      sorted[j] = team.shift();
     }
   }
+
 
   return sorted;
 }

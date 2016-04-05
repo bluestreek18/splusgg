@@ -9,6 +9,7 @@ exports.getGameSummoner = function(query) {
 		})
 		.then(function(summoner) {
 			Riot.getCurrentGame(summoner[query].id).then(function(gamedata) {
+				// console.log('DATA ==== ', gamedata)
 				resolve(gamedata);
 			})
 			.catch(function(err) {
