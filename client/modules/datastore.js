@@ -66,11 +66,11 @@ angular.module('splus.datastore', [])
 			console.log('matchupArray ==== ', matchupArray)
 			// ITS champ A vs champ B
 			// Assuming here they are sorted.
-			debugger
 			for(var i = 0; i < matchupArray.length; ++i) {
 				if(matchupArray[i].data['0']) {
 					DataHandler.matchups.push(matchupArray[i].data['0']);
 					DataHandler.matchups[i].versus = DataHandler.blueteam[i].championName + ' vs ' + DataHandler.redteam[i].championName;
+					debugger
 					DataHandler.matchups[i].favors = matchupArray[i].data['0'].winRate < 50.00 ? 
 					'Favors ' + DataHandler.redteam[i].championName :
 					'Favors ' + DataHandler.blueteam[i].championName;
@@ -84,7 +84,7 @@ angular.module('splus.datastore', [])
 		var getSummonerChampionStats = function() {
 			var array = [];
 			DataHandler.gameData.data.participants.forEach(function(val, index) {
-				if(index < 4) { // RATE LIMIT temporarily!!!
+				if(index <= 4) { // RATE LIMIT temporarily!!!
 					array.push(APIs.getSummonerChampStats(val.summonerId, val.championId));
 				}
 			})
