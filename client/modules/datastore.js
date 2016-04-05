@@ -63,12 +63,17 @@ angular.module('splus.datastore', [])
 		}
 
 		var processMatchupData = function(matchupArray) {
+			console.log('matchupArray ==== ', matchupArray)
 			// ITS champ A vs champ B
 			// Assuming here they are sorted.
+			debugger
 			for(var i = 0; i < matchupArray.length; ++i) {
 				if(matchupArray[i].data['0']) {
 					DataHandler.matchups.push(matchupArray[i].data['0']);
-					DataHandler.matchups[i].versus = DataHandler.blueteam[i].championUrl + ' vs ' + DataHandler.redteam[i].championUrl;
+					DataHandler.matchups[i].versus = DataHandler.blueteam[i].championName + ' vs ' + DataHandler.redteam[i].championName;
+					DataHandler.matchups[i].favors = matchupArray[i].data['0'].winRate < 50.00 ? 
+					'Favors ' + DataHandler.redteam[i].championName :
+					'Favors ' + DataHandler.blueteam[i].championName;
 				}
 				else {
 					DataHandler.matchups.push(matchupArray[i].data.error);
@@ -79,7 +84,7 @@ angular.module('splus.datastore', [])
 		var getSummonerChampionStats = function() {
 			var array = [];
 			DataHandler.gameData.data.participants.forEach(function(val, index) {
-				if(index < 5) { // RATE LIMIT temporarily!!!
+				if(index < 4) { // RATE LIMIT temporarily!!!
 					array.push(APIs.getSummonerChampStats(val.summonerId, val.championId));
 				}
 			})

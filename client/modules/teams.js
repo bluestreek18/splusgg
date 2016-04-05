@@ -15,6 +15,7 @@ angular.module('splus.teams', [])
 		$scope.insertData = function() {
 			var resp;
 			BuildData.getSummonerChampionStats().then(function(res) {
+				console.log('Champ Stats! = ', res);
 				resp = res;
 				return BuildData.buildPlayerObjects();
 			})
@@ -42,17 +43,25 @@ angular.module('splus.teams', [])
 				var matchupPromises = [];
 
 				gameData.data.participants.forEach(function(val, ind) {
-					if(ind < 5) {
+					if(ind <= 4) {
+						DataHandler.blueteam.push(gameData.data.participants[ind]);
+						DataHandler.redteam.push(gameData.data.participants[ind + 5]);
+					}
+
+					if(DataHandler.blueteam[ind] && DataHandler.redteam[ind]) {
 						champid1 = DataHandler.blueteam[ind].championName;
 						champid2 = DataHandler.redteam[ind].championName;
 						champid1 = champid1.replace(/\s+/g, '');
 						champid2 = champid2.replace(/\s+/g, '');
 						matchupPromises.push(APIs.getChampionMatchupData(champid1, champid2));
+
+						if(ind < 4) {
+							Badges.createBadgeProfiles(gameData.data.participants[ind]);
+						}
 					}
-					
-					Badges.createBadgeProfiles(gameData.data.participants[ind]);
 				})
 				
+				console.log('matchupPromises = ', matchupPromises)
 				return Promise.all(matchupPromises);
 			})
 			.catch(function(err) {

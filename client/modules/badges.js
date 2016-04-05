@@ -7,7 +7,7 @@ angular.module('splus.badges', [])
 				testMultiKills(champ);
 				testLeagueData(champ);
 			} else {
-				console.log('No Data to Process for Badges!', champ.championName);
+				console.log('No Data to Process for Badges!', champ);
 				return;
 			}
 		}
@@ -96,7 +96,7 @@ angular.module('splus.badges', [])
 			var series = (target === 3) ? 5 : 3;
 			var progress = w + 'W' + '/' + l + 'L' + ' of ' + series;
 
-			if(target - 1 === wins) {
+			if(target - 1 === w) {
 				obj.badges.push({ display: 'One Victory from Promotion' , tooltip: progress });
 			}
 			else {

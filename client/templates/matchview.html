@@ -37,10 +37,11 @@
           <div class="teamblue row row-centered">
             <div class="col-xs-4 col-md-2 col-half-offset col-centered" ng-repeat="matchup in matchups">
               <div class="matchupstatbox">
-                <p>{{matchup.versus}}</p>
-                <p>{{matchup.role}}</p>
-                <p>{{matchup.games}}</p>
-                <p>{{matchup.winRate}}</p>
+                <p class="matchupstats">{{matchup.versus}}</p>
+                <p class="matchupstats">{{matchup.role}}</p>
+                <p class="matchupstats">{{matchup.games}} Games Analyzed</p>
+                <p class="matchupstats">{{matchup.winRate}}%</p>
+                <p class="matchupstats">{{matchup.favors}}</p>
               </div>
             </div>
           </div>
