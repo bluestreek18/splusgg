@@ -8,7 +8,7 @@ angular.module('splus.teams', [])
 		$scope.bluebans = DataHandler.bluebans;
 		$scope.redbans = DataHandler.redbans;
 		$scope.highestTier = DataHandler.primaryPlayer.tier;
-		$scope.gameStarted = $scope.data.gameStartTime;
+		$scope.gameStarted = gameData.data.gameStartTime;
 		$rootScope.bgid = 'teamsbg';
 		console.log(DataHandler.gameData)
 
@@ -49,13 +49,13 @@ angular.module('splus.teams', [])
 					}
 
 					if(DataHandler.blueteam[ind] && DataHandler.redteam[ind]) {
-						champid1 = DataHandler.blueteam[ind].championName;
-						champid2 = DataHandler.redteam[ind].championName;
+						champid1 = DataHandler.blueteam[ind].imageUrl;
+						champid2 = DataHandler.redteam[ind].imageUrl;
 						champid1 = champid1.replace(/\s+/g, '');
 						champid2 = champid2.replace(/\s+/g, '');
 						matchupPromises.push(APIs.getChampionMatchupData(champid1, champid2));
 
-						if(ind < 4) {
+						if(ind <= 4) {
 							Badges.createBadgeProfiles(gameData.data.participants[ind]);
 						}
 					}

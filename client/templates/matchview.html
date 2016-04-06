@@ -3,7 +3,7 @@
             <br>
             <div class="bans">
                 <span ng-repeat="ban in bluebans" class="banpercent">
-                <p class="banrates">{{ban.staticData.banRate}}</p>
+                <p class="banrates">{{ban.staticData.banRate}}%</p>
                 <img class="bans" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/champion/{{ban.championUrl}}.png">
                 </span>
             </div>
@@ -11,7 +11,7 @@
                       <div class="playerframe">
                       <span class="txtoverlay">
                       <p>{{player.champStaticData.general.overallPosition}}</p>
-                      <p>{{player.champStaticData.general.winPercent}}</p>
+                      <p>{{player.champStaticData.general.winPercent}}%</p>
                       <img class="tiericon" ng-src="../img/tier-icons/tier_icons/{{player.tierData.tier}}_{{player.tierData.division}}.png">
                       </span>
                         <img class="profilesize" ng-src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{player.imageUrl}}_0.jpg">
