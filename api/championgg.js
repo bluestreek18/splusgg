@@ -3,8 +3,6 @@ var Process = require('./processobj');
 var Key = require('./key');
 var db = require('./database');
 
-// /champion/:name/matchup/:enemy?api_key=<API_KEY> //find botlane matchup information!
-
 //Move champgg calls here!
 
 exports.updateChampionStaticData = function() {

@@ -14,8 +14,8 @@ angular.module('splus.badges', [])
 
 		var testGamesPlayed = function(obj) {
 			if(!obj.summonerChampStats.hasOwnProperty('stats')) { 
-				player.summonerChampStats.stats = {};
-				player.summonerChampStats.stats.winRate = 'No Data for this Player.';
+				obj.summonerChampStats.stats = {};
+				obj.summonerChampStats.stats.winRate = 'No Data for this Player.';
 				return;
 			} //Are there stats for this player? Maybe first game?
 

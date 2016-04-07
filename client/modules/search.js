@@ -10,6 +10,7 @@ angular.module('splus.search', [])
 			noSpaces = noSpaces.replace(/\s+/g, '');
 
 			APIs.getGameInfo(noSpaces).then(function(resp) {
+				console.log('resp from api getgameinfo === ', resp)
 				if(!resp.data.hasOwnProperty('participants')) {
 					console.log(resp.data)
 					if(typeof resp.data === 'string') { $scope.error = resp.data; }

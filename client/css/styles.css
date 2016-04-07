@@ -80,7 +80,7 @@ small {
 }
 
 .summoners {
-	padding-top: 20px;
+/*	position: inherit;*/
 }
 
 .sumimages {
@@ -112,6 +112,8 @@ small {
 
 .divisor {
 	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .txtoverlay {

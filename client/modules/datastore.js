@@ -84,7 +84,7 @@ angular.module('splus.datastore', [])
 		var getSummonerChampionStats = function() {
 			var array = [];
 			DataHandler.gameData.data.participants.forEach(function(val, index) {
-				if(index <= 4) { // RATE LIMIT temporarily!!!
+				if(index <= 4 && val) { // RATE LIMIT temporarily!!! also checking summoner isnt null
 					array.push(APIs.getSummonerChampStats(val.summonerId, val.championId));
 				}
 			})
