@@ -31,8 +31,6 @@ exports.getCurrentGame = function(id) {
 	return new Promise(function(resolve, reject) {
 		req.get('https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/NA1/' + id + Key.apiKey, 
 			function(err, resp, body) {
-				console.log('statusCode getCurrentGame!: ', resp.statusCode);
-				console.log('raw request! === ', body);
 				if(err || resp.statusCode !== 200) {
 					reject(err);
 					return;
@@ -137,11 +135,3 @@ exports.getSummonerLeagueData = function(summonerIds) {
 	})
 }
 
-
-
-
-
-// https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/56892662/ranked?season=SEASON2016&api_key=af71b0eb-3864-47e2-85b7-d3ba30168220
-
-// db.getCollection('games').find({"gameId": 2136139141}, {"participants": "$all"})
-// db.getCollection('games').find({"gameId": 2136139141}, {"participants.teamId": "$all"})

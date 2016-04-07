@@ -4,7 +4,7 @@ angular.module('splus.datastore', [])
 
 		var getTierData = function(resp) {
 			DataHandler.gameData.data.participants.forEach(function(val, index) {
-				if(resp.data[val.summonerId]) {
+				if(resp && resp.data[val.summonerId]) {
 					var target = resp.data[val.summonerId]['0']
 					val.tierData = target.entries['0'];
 					val.tierData.name = target.name;
@@ -19,12 +19,11 @@ angular.module('splus.datastore', [])
 		}
 
 		var buildPlayerObjects = function() {
-			var promiseArray = [];
-			DataHandler.gameData.data.participants.forEach(function(val, index) {
-				promiseArray.push(APIs.getChampStaticData(val.imageUrl));
-			})
-
-			return Promise.all(promiseArray);
+			return Promise.all(DataHandler.gameData.data.participants.map(function(val) {
+				if(val) {
+					return APIs.getChampStaticData(val.imageUrl);
+				}
+			}));
 		}
 
 		var addBanStatic = function() {
@@ -50,7 +49,7 @@ angular.module('splus.datastore', [])
 
 		var processPlayers = function(result, gameData, res) {
 			result.forEach(function(val, ind) {
-				if(val.data && res[ind]) {
+				if(val && res[ind]) {
 					gameData.data.participants[ind].champStaticData = val.data;
 					gameData.data.participants[ind].summonerChampStats = res[ind].data;
 				}
@@ -70,7 +69,6 @@ angular.module('splus.datastore', [])
 				if(matchupArray[i].data['0']) {
 					DataHandler.matchups.push(matchupArray[i].data['0']);
 					DataHandler.matchups[i].versus = DataHandler.blueteam[i].championName + ' vs ' + DataHandler.redteam[i].championName;
-					debugger
 					DataHandler.matchups[i].favors = matchupArray[i].data['0'].winRate < 50.00 ? 
 					'Favors ' + DataHandler.redteam[i].championName :
 					'Favors ' + DataHandler.blueteam[i].championName;

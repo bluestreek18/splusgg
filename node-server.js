@@ -54,9 +54,7 @@ app.get('/api/summonerleaguedata', function(req, res) {
 });
 
 app.get('/api/champmatchupdatagg', function(req, res) {
-	console.log(req.query.name1, req.query.name2)
 	ChampGG.getChampionMatchupData(req.query.name1, req.query.name2).then(function(data) {
-		console.log('MATCHUP DATA === ', data)
 		res.send(data);
 	})
 	.catch(function(err) {

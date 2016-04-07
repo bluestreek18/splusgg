@@ -52,7 +52,9 @@ exports.processSummonerChampionData = function(obj, champid) {
   })
 }
 
-exports.sortParticipantsByRole = function(par) { //This function starts on successful data of cur game stats
+exports.sortParticipantsByRole = function(par) {  //This function starts on successful data of cur game stats
+  var makearry = {data: par};
+  console.log('participants = ', makearry)
   return setRoles(par).then(function(roles) {
     roles = roles.map(function(val, ind) {
       return val.map(function(val) {
@@ -82,12 +84,9 @@ exports.sortParticipantsByRole = function(par) { //This function starts on succe
 }
 
 var setRoles = function(par) {
-  var promises = [];
-  par.forEach(function(val, ind) {
-    promises.push(db.getRoles(val.championName));
-  })
-
-  return Promise.all(promises);
+  return Promise.all(par.map(function(val) {
+    return db.getRoles(val.championName);
+  }))
 }
 
 // Sorts teams by role for matchup comparison champ gg

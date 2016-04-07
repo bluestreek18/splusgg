@@ -6,6 +6,11 @@ angular.module('splus.badges', [])
 				testGamesPlayed(champ);
 				testMultiKills(champ);
 				testLeagueData(champ);
+				while(champ.badges.length < 5) {
+					console.log('badge array == ', champ.badges)
+					champ.badges.push({ display: '', show: false });
+				}
+
 			} else {
 				console.log('No Data to Process for Badges!', champ);
 				return;
@@ -80,51 +85,53 @@ angular.module('splus.badges', [])
 	}
 
 	var testLeagueData =  function(obj) {
-		var tstats = obj.tierData;
-		var lstats = obj.tierData.leaguePoints;
-		var rankedWinRate = ((obj.tierData.wins / (obj.tierData.losses + obj.tierData.wins)) * 100).toFixed(2);
-		rankedWinRate = Number(rankedWinRate);
-		obj.rankedOverallWinRate = rankedWinRate;
+		if(obj.tierData) {
+			var tstats = obj.tierData;
+			var lstats = obj.tierData.leaguePoints;
+			var rankedWinRate = ((obj.tierData.wins / (obj.tierData.losses + obj.tierData.wins)) * 100).toFixed(2);
+			rankedWinRate = Number(rankedWinRate);
+			obj.rankedOverallWinRate = rankedWinRate;
 
-		if(lstats === 99) {
-			obj.badges.push({ display: lstats + ' LP!' , tooltip: 'So close... ' });
-		}
-		else if(tstats.hasOwnProperty('miniSeries')) {
-			var l = tstats.miniSeries.losses;
-			var w = tstats.miniSeries.wins;
-			var target = tstats.miniSeries.target;
-			var series = (target === 3) ? 5 : 3;
-			var progress = w + 'W' + '/' + l + 'L' + ' of ' + series;
-
-			if(target - 1 === w) {
-				obj.badges.push({ display: 'One Victory from Promotion' , tooltip: progress });
+			if(lstats === 99) {
+				obj.badges.push({ display: lstats + ' LP!' , tooltip: 'So close... ' });
 			}
-			else {
-				obj.badges.push({ display: 'Player in Series!' , tooltip: progress });
+			else if(tstats.hasOwnProperty('miniSeries')) {
+				var l = tstats.miniSeries.losses;
+				var w = tstats.miniSeries.wins;
+				var target = tstats.miniSeries.target;
+				var series = (target === 3) ? 5 : 3;
+				var progress = w + 'W' + '/' + l + 'L' + ' of ' + series;
+
+				if(target - 1 === w) {
+					obj.badges.push({ display: 'One Victory from Promotion' , tooltip: progress });
+				}
+				else {
+					obj.badges.push({ display: 'Player in Series!' , tooltip: progress });
+				}
 			}
-		}
-		else if(100 - lstats < 16 && (tstats.tier !== 'master' && tstats.tier !== 'challenger')) {
-			obj.badges.push({ display: 'One Win for Series!' , tooltip: lstats + ' LP!' }); //implicit coercion bois!!! kyle gg
-		}
+			else if(100 - lstats < 16 && (tstats.tier !== 'master' && tstats.tier !== 'challenger')) {
+				obj.badges.push({ display: 'One Win for Series!' , tooltip: lstats + ' LP!' }); //implicit coercion bois!!! kyle gg
+			}
 
-		if(tstats.isHotStreak) {
-			obj.badges.push({ display: 'Hot Streak' , tooltip: 'Three in a Row, Not Bad...' });
-		}
-		if(tstats.isFreshBlood) {
-			obj.badges.push({ display: 'Fresh Blood' , tooltip: 'This player was recently Promoted' });
-		}
+			if(tstats.isHotStreak) {
+				obj.badges.push({ display: 'Hot Streak' , tooltip: 'Three in a Row, Not Bad...' });
+			}
+			if(tstats.isFreshBlood) {
+				obj.badges.push({ display: 'Fresh Blood' , tooltip: 'This player was recently Promoted' });
+			}
 
-		if(rankedWinRate > 75) {
-			obj.badges.push({ display: 'Challenjour!!?!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
-		}
-		else if(rankedWinRate > 70) {
-			obj.badges.push({ display: 'On Another Level!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
-		}
-		else if(rankedWinRate > 60) {
-			obj.badges.push({ display: 'Smurf Alert!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
-		}
-		else if(rankedWinRate > 55) {
-			obj.badges.push({ display: 'Solid!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
+			if(rankedWinRate > 75) {
+				obj.badges.push({ display: 'Challenjour!!?!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
+			}
+			else if(rankedWinRate > 70) {
+				obj.badges.push({ display: 'On Another Level!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
+			}
+			else if(rankedWinRate > 60) {
+				obj.badges.push({ display: 'Smurf Alert!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
+			}
+			else if(rankedWinRate > 55) {
+				obj.badges.push({ display: 'Solid!' , tooltip: 'This player has a Ranked Win Rate of ' + rankedWinRate + '%' });
+			}
 		}
 	}
 

@@ -13,24 +13,27 @@
                       <p>{{player.champStaticData.general.overallPosition}}</p>
                       <p>{{player.champStaticData.general.winPercent}}%</p>
                       <img class="tiericon" ng-src="../img/tier-icons/tier_icons/{{player.tierData.tier}}_{{player.tierData.division}}.png">
-                      </span>
-                        <img class="profilesize" ng-src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{player.imageUrl}}_0.jpg">
-                        <p class="message_username">{{player.summonerName}}</p>
-                        <a class="summoners" href=""></a>
-                            <div class="summoners">
-                                <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/profileicon/{{player.profileIconId}}.png">
-                                <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerOneUrl}}.png">
-                                <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerTwoUrl}}.png">
-                            </div>
-                            <span class="champion-winloss">Win Rate {{player.summonerChampStats.stats.winRate}}%</span>
-                            <span class="trajectory">{{player.last_twenty}}</span>
-                          <span class="roles">{{player.common_roles}}</span>
-                        </div>
-                        <div ng-repeat="item in player.badges" class="badges">
+                      <div ng-repeat="item in player.badges" class="badges">
                         <span uib-tooltip="{{item.tooltip}}" tooltip-class="bluebadge" class="badge">{{item.display}}</span>
                       </div>
+                      </span>
+                        <img class="profilesize" ng-src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{player.imageUrl}}_0.jpg">
+                        </div>
                     </div>
-            </div>
+
+                    <div id="bluebox">
+                      <p class="message_username">{{player.summonerName}}</p>
+                      <a class="summoners" href=""></a>
+                    <div class="summoners">
+                        <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/profileicon/{{player.profileIconId}}.png">
+                        <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerOneUrl}}.png">
+                        <img class="sumimages" ng-src="http://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerTwoUrl}}.png">
+                    </div>
+                      <span class="champion-winloss">Win Rate {{player.summonerChampStats.stats.winRate}}%</span>
+                      <span class="trajectory">{{player.last_twenty}}</span>
+                      <span class="roles">{{player.common_roles}}</span>
+                    </div>
+                    </div>
 
 
         <div class="divisor">
