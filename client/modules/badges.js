@@ -6,6 +6,12 @@ angular.module('splus.badges', [])
 				testGamesPlayed(champ);
 				testMultiKills(champ);
 				testLeagueData(champ);
+				getKDA(champ);
+				firstBlood(champ);
+				smallStats(champ);
+
+
+				checkLength(champ);
 			} else {
 				console.log('No Data to Process for Badges!', champ);
 				return;
@@ -83,6 +89,20 @@ angular.module('splus.badges', [])
 		else if(stats.totalQuadraKills > 0) {
 			array.badges.push({ display: array.championName + ' Quadra Kill!', tooltip: 'TotalQuadraKills: ' + stats.totalQuadraKills });
 		}
+
+		var tdk = (stats.totalDoubleKills / stats.totalSessionsPlayed).toFixed(2);
+		if(tdk >= 1.75) {
+			array.badges.push({ display: array.championName + ' DoubleKillGod!', tooltip: 'DKPG: ' + tdk });
+		}
+		else if(tdk >= 1.35) {
+			array.badges.push({ display: array.championName + ' DoubleKillAssasin', tooltip: 'DKPG: ' + tdk });
+		}
+		else if(tdk >= 1) {
+			array.badges.push({ display: array.championName + ' DoubleKillKing!', tooltip: 'DKPG: ' + tdk });
+		}
+		else if(tdk >= 0.75) {
+			array.badges.push({ display: 'DoubleKillMaster!', tooltip: 'DKPG: ' + tdk });
+		}
 	}
 
 	var testLeagueData =  function(obj) {
@@ -136,6 +156,70 @@ angular.module('splus.badges', [])
 		}
 	}
 
+	var getKDA = function(obj) {
+		stat = obj.summonerChampStats.stats;
+		kda = ((stat.totalAssists + stat.totalChampionKills) / stat.totalDeathsPerSession).toFixed(2);
+
+		if(kda > 10) {
+			obj.badges.push({ display: 'Its Over 9000!' , tooltip: kda + ' KDA' });
+		}
+		else if(kda > 8) {
+			obj.badges.push({ display: 'Pls... Calm Down' , tooltip: kda + ' KDA' });
+		}
+		else if(kda > 5) {
+			obj.badges.push({ display: '*%@& Smurf!' , tooltip: kda + ' KDA' });
+		}
+		else if(kda > 4) {
+			obj.badges.push({ display: 'Legends Never Die' , tooltip: kda + ' KDA' });
+		}
+		else if(kda > 3) {
+			obj.badges.push({ display: '3X!' , tooltip: kda + ' KDA, Obviously a Professional.' });
+		}
+		else if(kda > 2.5) {
+			obj.badges.push({ display: 'Superb!' , tooltip: kda + ' KDA' });
+		}
+	}
+
+	var firstBlood = function(obj) {
+		stat = obj.summonerChampStats.stats;
+		fb = (stat.totalFirstBlood / stat.totalSessionsPlayed) * 100;
+
+		if(fb > 90) {
+			obj.badges.push({ display: 'Bro Pls!!?' , tooltip: fb + '% FirstBloods!' });
+		}
+		else if(fb > 50) {
+			obj.badges.push({ display: 'U Cray!!?' , tooltip: fb + '% FirstBloods!' });
+		}
+		else if(fb > 30) {
+			obj.badges.push({ display: 'Lee Syndrome!' , tooltip: fb + '% FirstBloods!' });
+		}
+		else if(fb > 15) {
+			obj.badges.push({ display: 'Level 1 Invade Bois!' , tooltip: fb + '% FirstBloods!' });
+		}
+		else if(fb > 10) {
+			obj.badges.push({ display: 'Supremely Average!' , tooltip: fb + '% FirstBloods!' });
+		}
+	}
+
+	var smallStats = function(obj) {
+		stat = obj.summonerChampStats.stats;
+		var minion = stat.totalMinionKills / totalSessionsPlayed;
+		var gold = stat.totalGoldEarned / totalSessionsPlayed;
+
+		if(minion > 200) {
+			obj.badges.push({ display: 'Master Minion!' , tooltip: minion + 's Average per Game' });
+		}
+		if(gold > 15000) {
+			obj.badges.push({ display: 'Fort Knox!' , tooltip: gold + ' Earned Average per Game!' });
+		}
+	}
+
+
+	var checkLength = function(champ) {
+		while(champ.badges.length > 5) {
+			champ.badges.shift();
+		}
+	}
 
 		return {
 			createBadgeProfiles: createBadgeProfiles

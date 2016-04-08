@@ -46,7 +46,7 @@ exports.processSummonerChampionData = function(obj, champid) {
     }
 
     db.insertPlayerChampionStats(obj).then(function(data) {
-      console.log('champ data insert success!', data);
+      //console.log('champ data insert success!', data);
     })
     .catch(function(err) {
       console.log('champ data insert failed', err);
@@ -77,6 +77,8 @@ console.log('ROLES', roles);
         sortedblue.push(par[ind]);
       }
     })
+
+    console.log('roles & etc: ', sortedblue, sortedred)
 
 
     sortedblue = checkTeam(sortedblue.slice());
