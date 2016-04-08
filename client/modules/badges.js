@@ -6,11 +6,6 @@ angular.module('splus.badges', [])
 				testGamesPlayed(champ);
 				testMultiKills(champ);
 				testLeagueData(champ);
-				while(champ.badges.length < 5) {
-					console.log('badge array == ', champ.badges)
-					champ.badges.push({ display: '', show: false });
-				}
-
 			} else {
 				console.log('No Data to Process for Badges!', champ);
 				return;
@@ -54,7 +49,7 @@ angular.module('splus.badges', [])
 				obj.badges.push({ display: obj.championName + ' Disciple!', tooltip: 'Its Growing on them... ' + pString });
 			}
 			else if (played > 15) {
-				obj.badges.push({ display: obj.championName + ' Begginner!', tooltip: 'Don\'t Quit your Day Job... ' + pString });
+				obj.badges.push({ display: obj.championName + ' Beginner!', tooltip: 'Don\'t Quit your Day Job... ' + pString });
 			}
 			else if (played > 10) {
 				obj.badges.push({ display: obj.championName + ' Novice!', tooltip: pString });

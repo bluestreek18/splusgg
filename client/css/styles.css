@@ -146,7 +146,8 @@ p {
 }
 
 .tiericon {
-	width: 25%;
+	width: 40%;
+	padding-top: 7em;
 }
 
 .matchupstats {

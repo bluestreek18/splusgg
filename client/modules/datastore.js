@@ -37,7 +37,7 @@ angular.module('splus.datastore', [])
 							DataHandler.gameData.data.bannedChampions[ind].staticData = data.data.general;
 							return data.data.general;
 						}
-						console.log('No staticData Found!');
+
 						return 'No staticData Found!';
 					}));
 				}
@@ -62,9 +62,6 @@ angular.module('splus.datastore', [])
 		}
 
 		var processMatchupData = function(matchupArray) {
-			console.log('matchupArray ==== ', matchupArray)
-			// ITS champ A vs champ B
-			// Assuming here they are sorted.
 			for(var i = 0; i < matchupArray.length; ++i) {
 				if(matchupArray[i].data['0']) {
 					DataHandler.matchups.push(matchupArray[i].data['0']);
@@ -72,9 +69,12 @@ angular.module('splus.datastore', [])
 					DataHandler.matchups[i].favors = matchupArray[i].data['0'].winRate < 50.00 ? 
 					'Favors ' + DataHandler.redteam[i].championName :
 					'Favors ' + DataHandler.blueteam[i].championName;
+					DataHandler.matchups[i].games += ' Games Analyzed';
+					DataHandler.matchups[i].winRate += ' %';
 				}
 				else {
-					DataHandler.matchups.push(matchupArray[i].data.error);
+					DataHandler.matchups.push(matchupArray[i].data['0']);
+					DataHandler.matchups[i].error = 'Matchup Not Found in Database!';
 				}
 			}
 		}

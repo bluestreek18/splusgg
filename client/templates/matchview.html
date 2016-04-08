@@ -21,6 +21,7 @@
                         </div>
                     </div>
 
+                    <div class="col-xs-4 col-md-2 col-half-offset col-centered" id="playerbox" ng-repeat="player in blueteam">
                     <div id="bluebox">
                       <p class="message_username">{{player.summonerName}}</p>
                       <a class="summoners" href=""></a>
@@ -42,9 +43,10 @@
               <div class="matchupstatbox">
                 <p class="matchupstats">{{matchup.versus}}</p>
                 <p class="matchupstats">{{matchup.role}}</p>
-                <p class="matchupstats">{{matchup.games}} Games Analyzed</p>
-                <p class="matchupstats">{{matchup.winRate}}%</p>
+                <p class="matchupstats">{{matchup.games}}</p>
+                <p class="matchupstats">{{matchup.winRate}}</p>
                 <p class="matchupstats">{{matchup.favors}}</p>
+                <p class="matchupstats">{{matchup.error}}</p>
               </div>
             </div>
           </div>
