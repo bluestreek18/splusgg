@@ -73,8 +73,7 @@ angular.module('splus.datastore', [])
 					DataHandler.matchups[i].winRate += ' %';
 				}
 				else {
-					DataHandler.matchups.push(matchupArray[i].data['0']);
-					DataHandler.matchups[i].error = 'Matchup Not Found in Database!';
+					DataHandler.matchups[i] = { data: { error: 'Matchup Not Found in Database!' } };
 				}
 			}
 		}
