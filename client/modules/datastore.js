@@ -62,20 +62,33 @@ angular.module('splus.datastore', [])
 		}
 
 		var processMatchupData = function(matchupArray) {
-			for(var i = 0; i < matchupArray.length; ++i) {
-				if(matchupArray[i].data['0']) {
-					DataHandler.matchups.push(matchupArray[i].data['0']);
-					DataHandler.matchups[i].versus = DataHandler.blueteam[i].championName + ' vs ' + DataHandler.redteam[i].championName;
-					DataHandler.matchups[i].favors = matchupArray[i].data['0'].winRate < 50.00 ? 
-					'Favors ' + DataHandler.redteam[i].championName :
-					'Favors ' + DataHandler.blueteam[i].championName;
-					DataHandler.matchups[i].games += ' Games Analyzed';
-					DataHandler.matchups[i].winRate += ' %';
+			return new Promise(function(resolve, reject) {
+				if(!matchupArray) {
+					reject(matchupArray);
+					return;
 				}
-				else {
-					DataHandler.matchups[i] = { data: { error: 'Matchup Not Found in Database!' } };
-				}
-			}
+
+				var mHold = [];
+				var rolePos = ['Jungle', 'ADC', 'Top', 'Support', 'Middle'];
+					for(var i = 0; i < matchupArray.length; ++i) {
+						if(matchupArray[i].data['0']) {
+							mHold.push(matchupArray[i].data['0']);
+							mHold[i].versus = DataHandler.blueteam[i].championName + ' vs ' + DataHandler.redteam[i].championName;
+							mHold[i].favors = matchupArray[i].data['0'].winRate < 50.00 ? 
+							'Favors ' + DataHandler.redteam[i].championName :
+							'Favors ' + DataHandler.blueteam[i].championName;
+							mHold[i].games += ' Games Analyzed';
+							mHold[i].winRate += ' %';
+							mHold[i].role = rolePos[i];
+						}
+						else {
+							mHold[i] = { error: 'Matchup Not Found!' };
+							mHold[i].role = rolePos[i];
+						}
+					}
+
+					resolve(mHold);
+			})		
 		}
 
 		var getSummonerChampionStats = function() {

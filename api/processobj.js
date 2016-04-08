@@ -64,6 +64,7 @@ exports.sortParticipantsByRole = function(par) {  //This function starts on succ
       });
     })
 
+console.log('ROLES', roles);
     var sortedblue = [];
     var sortedred = [];
 
@@ -97,6 +98,7 @@ var checkTeam = function(team) {
   var roles = ['Top', 'Middle', 'Support', 'ADC', 'Jungle'];
   var rolePos = ['Jungle', 'ADC', 'Top', 'Support', 'Middle'];
   var sorted = [];
+  var limit = 0;
 
   var testRole = function(role, summoner) {
     if(team[i].roles.indexOf(role) !== -1 && (team[i].summonerOneUrl === summoner || team[i].summonerTwoUrl === summoner) && roles.indexOf(role) !== -1) {
@@ -109,20 +111,42 @@ var checkTeam = function(team) {
       return false;
     }
   }
+  
+  var findJungler = function() {
+    debugger
+    ++limit;
+    for(var j = team.length - 1; i > 0; --j) {
+      if(team[j].summonerOneUrl === 'SummonerSmite' || team[j].summonerTwoUrl === 'SummonerSmite') {
+        sorted[rolePos.indexOf('Jungle')] = team[j];
+        team.splice(j, 1);
+        roles.splice(roles.indexOf('Jungle'), 1);
+        i = i - 1;
+        return true;
+      }
+    }
+  }
 
   for(var i = team.length - 1; i > 0; --i) {
+    if(limit < 20 && roles.indexOf('Jungle') !== -1) {
+      findJungler();
+    }
+    if(limit < 20 && roles.indexOf('ADC') !== -1) {
+      team.forEach(function() {
+        var bool = testRole('ADC', 'SummonerHeal');
+        if(bool) {
+          i = i - 1;
+        }
+      })
+    }
 
-      if(testRole('Jungle', 'SummonerSmite'));
-
+      if(testRole('Support', 'SummonerExhaust'));
+      else if(testRole('Top', 'SummonerTeleport'));
       else if(team[i].roles.length === 1 && sorted[rolePos.indexOf(team[i].roles[0])] === undefined) {
         sorted[rolePos.indexOf(team[i].roles[0])] = team[i];
         roles.splice(roles.indexOf(team[i].roles[0]), 1);
         team.splice(i, 1);
       }
 
-      else if(testRole('ADC', 'SummonerHeal'));
-      else if(testRole('Top', 'SummonerTeleport'));
-      else if(testRole('Support', 'SummonerExhaust'));
       else if(testRole('Middle', 'SummonerDot'));
       else if(testRole('Middle', 'SummonerBarrier'));
   }

@@ -61,15 +61,20 @@ angular.module('splus.teams', [])
 					}
 				})
 				
-				console.log('matchupPromises = ', matchupPromises)
 				return Promise.all(matchupPromises);
 			})
 			.catch(function(err) {
 				console.log(err);
 			})
 			.then(function(matchupArray) {
-				BuildData.processMatchupData(matchupArray);
-				console.log('Matchups! === ', $scope.matchups)
+				return BuildData.processMatchupData(matchupArray);
+			})
+			.then(function(data) {
+				$scope.$apply(function() {  //hey AngularJS, execute this function and update the view!
+					console.log('applying matchup changes!')
+    			$scope.matchups = data;
+     		});
+				console.log('matchups = ', $scope.matchups);
 			})
 			.catch(function(err) {
 				console.log('Insert Data Error!', err);

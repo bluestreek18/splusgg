@@ -38,6 +38,7 @@ exports.getGameSummoner = function(query) {
 				return;
 			}
 
+			console.log('Summoner Not in Game!');
 			reject('Summoner Not in Game!');
 		})
 	})

@@ -74,7 +74,7 @@ small {
 }
 
 .teamblue {
-	padding-top: 100px;
+	padding-top: 70px;
 }
 
 .message_username {
@@ -171,7 +171,6 @@ p {
 }
 
 .matchupstatbox {
-	padding: 15px;
 	background: rgba(0,0,0,0.3);
 }
 
@@ -186,8 +185,4 @@ p {
 
 .rank {
 	background: rgba(0,0,0,0.7);
-}
-
-.win {
-
 }
