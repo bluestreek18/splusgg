@@ -68,10 +68,6 @@ angular.module('splus.teams', [])
 				console.log(err);
 			})
 			.then(function(matchupArray) {
-				console.log('MATCHUP ===  ', matchupArray);
-				//add matchup data somewhere
-				//process both botlanes as one normalized matchup
-				//add function to datastorejs
 				BuildData.processMatchupData(matchupArray);
 				console.log('Matchups! === ', $scope.matchups)
 			})

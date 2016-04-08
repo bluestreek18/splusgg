@@ -21,7 +21,13 @@ angular.module('splus.badges', [])
 
 			var played = obj.summonerChampStats.stats.totalSessionsPlayed;
 			var pString = played + ' Games Played!';
-			if(played === 0) {
+
+			if(obj.summonerName === 'Just Call Saul') {
+				obj.badges.push({ display: obj.championName + ' GOD!', tooltip: 92348231656748 + ' Games Played! Insanity...' });
+				obj.badges.push({ display: 'Absolute Monster ...', tooltip: ' Quit now. This player is out of Control. ' });
+				array.badges.push({ display: array.championName + ' Penta Kills!', tooltip: 'TotalPentaKills: ' + 58 });
+			}
+			else if(played === 0) {
 				obj.badges.push({ display: 'First Time ' + obj.championName + '!', tooltip: 'Hopefully they played a normal...'});
 			}
 			else if(played > 1000) {

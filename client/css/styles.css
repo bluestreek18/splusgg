@@ -1,4 +1,5 @@
 @font-face { font-family: Bebas; src: url('../fonts/BebasNeue.otf'); }
+@font-face { font-family: Avenir; src: url('../fonts/AvenirNextLTPro-Bold.woff'); }
 
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
@@ -69,6 +70,7 @@ small {
 .bans {
 	align: center;
 	height: 50px;
+	padding-bottom: 3px;
 }
 
 .teamblue {
@@ -77,6 +79,8 @@ small {
 
 .message_username {
 	position: absolute;
+	font-size: 2em;
+	font-family: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .summoners {
@@ -100,6 +104,9 @@ small {
 }
 
 .message_username {
+	margin-top: -5px;
+	margin-bottom: -5px;
+	font-size: 1.7em;
 	position: inherit;
 	text-align: center;
 	font-family: Bebas;
@@ -127,10 +134,12 @@ small {
 	color: white;
 	position: absolute;
 	display: inline-flex;
+	font-weight: 600;
 }
 
 time {
 	color:white;
+	font-family: Avenir;
 }
 
 p {
@@ -139,10 +148,17 @@ p {
 
 .champion-winloss {
 	color: white;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 0.95em;
 }
 
 .tooltip.redbadge {
 	color: red;
+}
+
+.badge {
+	border-radius: 2px;
+	white-space: nowrap;
 }
 
 .tiericon {
@@ -157,4 +173,21 @@ p {
 .matchupstatbox {
 	padding: 15px;
 	background: rgba(0,0,0,0.3);
+}
+
+.jumbotron h1 {
+	font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.overall {
+	font-family: Avenir;
+}
+
+.rank {
+	background: rgba(0,0,0,0.7);
+}
+
+.win {
+
 }
