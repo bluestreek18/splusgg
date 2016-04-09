@@ -6,7 +6,7 @@
 	  		<form name="findgame" ng-submit="submit()">
 				  <fieldset class="form-group">
 				    <span id="summonername">Welcome to S+ gg</span>
-				    <input type="search" ng-model="text" class="form-control" id="searchbox" placeholder="Enter Summoner Name!" ng-minlength='5' required>
+				    <input type="search" ng-model="text" ng-bind-html class="form-control" id="searchbox" placeholder="Enter Summoner Name!" ng-minlength='5' required>
 				    <small class="text-muted" ng-show="error">{{error}}</small>
 				  </fieldset>
 				</form>

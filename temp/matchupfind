@@ -1,0 +1,355 @@
+var supertest = [ { teamId: 100,
+    spell1Id: 14,
+    spell2Id: 4,
+    championId: 62,
+    profileIconId: 6,
+    summonerName: 'Stevle Wonder',
+    bot: false,
+    summonerId: 50943587,
+    imageUrl: 'MonkeyKing',
+    championName: 'Wukong',
+    summonerOneUrl: 'SummonerDot',
+    summonerTwoUrl: 'SummonerFlash',
+    roles: [ 'Top', 'Jungle' ] },
+  { teamId: 100,
+    spell1Id: 3,
+    spell2Id: 4,
+    championId: 57,
+    profileIconId: 1114,
+    summonerName: 'iTroll',
+    bot: false,
+    summonerId: 28109634,
+    imageUrl: 'Maokai',
+    championName: 'Maokai',
+    summonerOneUrl: 'SummonerExhaust',
+    summonerTwoUrl: 'SummonerFlash',
+    roles: [ 'Top', 'Jungle' ] },
+  { teamId: 100,
+    spell1Id: 4,
+    spell2Id: 12,
+    championId: 24,
+    profileIconId: 527,
+    summonerName: 'hashinshin',
+    bot: false,
+    summonerId: 349795,
+    imageUrl: 'Jax',
+    championName: 'Jax',
+    summonerOneUrl: 'SummonerFlash',
+    summonerTwoUrl: 'SummonerTeleport',
+    roles: [ 'Top', 'Jungle' ] },
+  { teamId: 100,
+    spell1Id: 4,
+    spell2Id: 11,
+    championId: 11,
+    profileIconId: 1114,
+    summonerName: 'TrapTherapy',
+    bot: false,
+    summonerId: 47586386,
+    imageUrl: 'MasterYi',
+    championName: 'Master Yi',
+    summonerOneUrl: 'SummonerFlash',
+    summonerTwoUrl: 'SummonerSmite',
+    roles: [ 'Jungle' ] },
+  { teamId: 100,
+    spell1Id: 4,
+    spell2Id: 7,
+    championId: 202,
+    profileIconId: 605,
+    summonerName: 'RawVision',
+    bot: false,
+    summonerId: 24482377,
+    imageUrl: 'Jhin',
+    championName: 'Jhin',
+    summonerOneUrl: 'SummonerFlash',
+    summonerTwoUrl: 'SummonerHeal',
+    roles: [ 'ADC' ] }, { teamId: 200,
+    spell1Id: 7,
+    spell2Id: 4,
+    championId: 81,
+    profileIconId: 551,
+    summonerName: 'BonjourLim',
+    bot: false,
+    summonerId: 50283648,
+    imageUrl: 'Ezreal',
+    championName: 'Ezreal',
+    summonerOneUrl: 'SummonerHeal',
+    summonerTwoUrl: 'SummonerFlash',
+    roles: [ 'ADC' ] },
+  { teamId: 200,
+    spell1Id: 4,
+    spell2Id: 3,
+    championId: 40,
+    profileIconId: 948,
+    summonerName: 'Old Wang',
+    bot: false,
+    summonerId: 46049068,
+    imageUrl: 'Janna',
+    championName: 'Janna',
+    summonerOneUrl: 'SummonerFlash',
+    summonerTwoUrl: 'SummonerExhaust',
+    roles: [ 'Support' ] },
+  { teamId: 200,
+    spell1Id: 4,
+    spell2Id: 12,
+    championId: 98,
+    profileIconId: 20,
+    summonerName: 'RiddlerShen',
+    bot: false,
+    summonerId: 20857656,
+    imageUrl: 'Shen',
+    championName: 'Shen',
+    summonerOneUrl: 'SummonerFlash',
+    summonerTwoUrl: 'SummonerTeleport',
+    roles: [ 'Top' ] },
+  { teamId: 200,
+    spell1Id: 11,
+    spell2Id: 14,
+    championId: 17,
+    profileIconId: 774,
+    summonerName: 'HlKASHlKUN',
+    bot: false,
+    summonerId: 70339620,
+    imageUrl: 'Teemo',
+    championName: 'Teemo',
+    summonerOneUrl: 'SummonerSmite',
+    summonerTwoUrl: 'SummonerDot',
+    roles: [ 'Top' ] },
+  { teamId: 200,
+    spell1Id: 4,
+    spell2Id: 6,
+    championId: 101,
+    profileIconId: 732,
+    summonerName: 'fairlynasty',
+    bot: false,
+    summonerId: 39070352,
+    imageUrl: 'Xerath',
+    championName: 'Xerath',
+    summonerOneUrl: 'SummonerFlash',
+    summonerTwoUrl: 'SummonerHaste',
+    roles: [ 'Middle' ] } ]
+    
+var sRef = {
+   "data": {
+      "21": {
+         "id": 21,
+         "description": "Shields your champion for 115-455 (depending on champion level) for 2 seconds.",
+         "name": "Barrier",
+         "key": "SummonerBarrier",
+         "summonerLevel": 4
+      },
+      "3": {
+         "id": 3,
+         "description": "Exhausts target enemy champion, reducing their Movement Speed and Attack Speed by 30%, their Armor and Magic Resist by 10, and their damage dealt by 40% for 2.5 seconds.",
+         "name": "Exhaust",
+         "key": "SummonerExhaust",
+         "summonerLevel": 4
+      },
+      "2": {
+         "id": 2,
+         "description": "Reveals a small area of the map for your team for 5 seconds.",
+         "name": "Clairvoyance",
+         "key": "SummonerClairvoyance",
+         "summonerLevel": 8
+      },
+      "1": {
+         "id": 1,
+         "description": "Removes all disables and summoner spell debuffs affecting your champion and lowers the duration of incoming disables by 65% for 3 seconds.",
+         "name": "Cleanse",
+         "key": "SummonerBoost",
+         "summonerLevel": 6
+      },
+      "7": {
+         "id": 7,
+         "description": "Restores 90-345 Health (depending on champion level) and grants 30% Movement Speed for 1 second to you and target allied champion. This healing is halved for units recently affected by Summoner Heal.",
+         "name": "Heal",
+         "key": "SummonerHeal",
+         "summonerLevel": 1
+      },
+      "30": {
+         "id": 30,
+         "description": "Quickly travel to the Poro King's side.",
+         "name": "To the King!",
+         "key": "SummonerPoroRecall",
+         "summonerLevel": 1
+      },
+      "6": {
+         "id": 6,
+         "description": "Your champion can move through units and has 27% increased Movement Speed for 10 seconds.",
+         "name": "Ghost",
+         "key": "SummonerHaste",
+         "summonerLevel": 1
+      },
+      "32": {
+         "id": 32,
+         "description": "Throw a snowball in a straight line at your enemies. If it hits an enemy, they become marked and your champion can quickly travel to the marked target as a follow up.",
+         "name": "Mark",
+         "key": "SummonerSnowball",
+         "summonerLevel": 1
+      },
+      "4": {
+         "id": 4,
+         "description": "Teleports your champion a short distance toward your cursor's location.",
+         "name": "Flash",
+         "key": "SummonerFlash",
+         "summonerLevel": 8
+      },
+      "31": {
+         "id": 31,
+         "description": "Toss a Poro at your enemies. If it hits, you can quickly travel to your target as a follow up.",
+         "name": "Poro Toss",
+         "key": "SummonerPoroThrow",
+         "summonerLevel": 1
+      },
+      "17": {
+         "id": 17,
+         "description": "Allied Turret: Grants massive regeneration for 8 seconds. Enemy Turret: Reduces damage dealt by 80% for 8 seconds.",
+         "name": "Garrison",
+         "key": "SummonerOdinGarrison",
+         "summonerLevel": 1
+      },
+      "13": {
+         "id": 13,
+         "description": "Restores 40% of your champion's maximum Mana. Also restores allies for 40% of their maximum Mana.",
+         "name": "Clarity",
+         "key": "SummonerMana",
+         "summonerLevel": 1
+      },
+      "14": {
+         "id": 14,
+         "description": "Ignites target enemy champion, dealing 70-410 true damage (depending on champion level) over 5 seconds, grants you vision of the target, and reduces healing effects on them for the duration.",
+         "name": "Ignite",
+         "key": "SummonerDot",
+         "summonerLevel": 10
+      },
+      "11": {
+         "id": 11,
+         "description": "Deals 390-1000 true damage (depending on champion level) to target epic or large monster or enemy minion.",
+         "name": "Smite",
+         "key": "SummonerSmite",
+         "summonerLevel": 10
+      },
+      "12": {
+         "id": 12,
+         "description": "After channeling for 3.5 seconds, teleports your champion to target allied structure, minion, or ward.",
+         "name": "Teleport",
+         "key": "SummonerTeleport",
+         "summonerLevel": 6
+      }
+   },
+   "type": "summoner",
+   "version": "6.6.1"
+};
+    
+var sortParticipantsByRole = function(par) {
+
+    var sortedblue = [];
+    var sortedred = [];
+
+	par.forEach(function(val, ind) {
+		if(par[ind].teamId === 200) {
+        sortedred.push(par[ind]);
+      }
+      else {
+        sortedblue.push(par[ind]);
+      }
+	})
+      
+
+
+
+    sortedblue = checkTeam(sortedblue.slice());
+    sortedblue.forEach(function(val) {
+    	console.log(val.championName)
+    })
+    sortedred = checkTeam(sortedred.slice());
+    sortedred.forEach(function(val) {
+    	console.log(val.championName)
+    })
+    ptsd = sortedblue.concat(sortedred);
+
+    return ptsd;
+
+}
+
+
+var checkTeam = function(team) {
+  var roles = ['Top', 'Middle', 'Support', 'ADC', 'Jungle'];
+  var rolePos = ['Jungle', 'ADC', 'Top', 'Support', 'Middle'];
+  var sorted = [];
+  var limit = 0;
+
+  var testRole = function(role, summoner) {
+    if(team[i].roles.indexOf(role) !== -1 && (team[i].summonerOneUrl === summoner || team[i].summonerTwoUrl === summoner) && roles.indexOf(role) !== -1) {
+      sorted[rolePos.indexOf(role)] = team[i];
+      team.splice(i, 1);
+      roles.splice(roles.indexOf(role), 1);
+      return true
+    }
+    else {
+      return false;
+    }
+  }
+  
+	var findJungler = function() {
+		debugger
+    ++limit;
+    for(var j = team.length - 1; i > 0; --j) {
+      if(team[j].summonerOneUrl === 'SummonerSmite' || team[j].summonerTwoUrl === 'SummonerSmite') {
+        sorted[rolePos.indexOf('Jungle')] = team[j];
+        team.splice(j, 1);
+        roles.splice(roles.indexOf('Jungle'), 1);
+        i = i - 1;
+        return true;
+      }
+    }
+  }
+
+  for(var i = team.length - 1; i > 0; --i) {
+    if(limit < 20 && roles.indexOf('Jungle') !== -1) {
+      findJungler();
+    }
+    if(limit < 20 && roles.indexOf('ADC') !== -1) {
+      team.forEach(function() {
+        var bool = testRole('ADC', 'SummonerHeal');
+        if(bool) {
+        	i = i - 1;
+        }
+      })
+    }
+
+      if(testRole('Support', 'SummonerExhaust'));
+      else if(testRole('Top', 'SummonerTeleport'));
+      else if(team[i].roles.length === 1 && sorted[rolePos.indexOf(team[i].roles[0])] === undefined) {
+        sorted[rolePos.indexOf(team[i].roles[0])] = team[i];
+        roles.splice(roles.indexOf(team[i].roles[0]), 1);
+        team.splice(i, 1);
+      }
+
+      else if(testRole('Middle', 'SummonerDot'));
+      else if(testRole('Middle', 'SummonerBarrier'));
+  }
+  
+  
+  for(var j = 0; j < 4; ++j) {
+    if(roles.length !== 0) {
+      var last = roles.shift();
+      if(sorted[rolePos.indexOf(last)] === undefined) {
+        sorted[rolePos.indexOf(last)] = team.pop();
+      }
+    }
+    if(!sorted[j] && team.length > 0) {
+      sorted[j] = team.shift();
+    }
+  }
+
+
+  return sorted;
+}
+    
+var yeh = sortParticipantsByRole(supertest);
+
+//console.log(yeh.length)
+    
+    
+    
+    

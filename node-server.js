@@ -14,10 +14,12 @@ app.listen(process.env.PORT || 3005, function() {
 });
 
 app.get('/api/initialgamedata', function(req, res) {
-	Logic.getGameSummoner(req.query.name).then(function(data) {
+	Logic.getSummonerGame(req.query.name).then(function(data) {
+		// console.log('api init data = ', data)
 		res.send(data);
 	})
 	.catch(function(err) {
+		// console.log('api/inital err! ', err)
 		res.send(err);
 	})
 

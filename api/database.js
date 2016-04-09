@@ -35,6 +35,7 @@ MongoClient.connect(url, function (err, db) {
 					reject(data);
 					return;
 				}
+
 				resolve(data);
 			})
 		})

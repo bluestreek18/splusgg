@@ -5,7 +5,6 @@ var db = require('./database');
 
 //Summoner v1.4
 exports.getSummonerID = function(name) {
-	//console.log('getSummonerID: ', name);
 	return new Promise(function(resolve, reject) {
 		req.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + name + Key.apiKey, 
 			function(err, resp, body) {
@@ -32,7 +31,7 @@ exports.getCurrentGame = function(id) {
 		req.get('https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/NA1/' + id + Key.apiKey, 
 			function(err, resp, body) {
 				if(err || resp.statusCode !== 200) {
-					reject(err);
+					reject(resp.statusCode);
 					return;
 				}
 

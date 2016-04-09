@@ -18,38 +18,10 @@ exports.getStaticAll = function(array) {
 
 }
 
-
-exports.getGameSummoner = function(query) {
-	return new Promise(function(resolve, reject) {
-		getSummonerID(query).then(function(data) {
-			if(data === 404) {
-				reject('Summoner ID not Found!');
-				return;
-			}
-
-			return getGameCurrent(query, data);
-		})
-		.then(function(data) {
-			resolve(data);
-		})
-		.catch(function(err) {
-			if(err === 404) {
-				reject(err);
-				return;
-			}
-
-			console.log('Summoner Not in Game!');
-			reject('Summoner Not in Game!');
-		})
-	})
-
-
-}
-
-
 var getSummonerID = function(query) {
 	return new Promise(function(resolve, reject) {
 		db.getPlayerId(query).then(function(summoner) {
+			console.log('found sum name in db!')
 			resolve(summoner);
 		})
 		.catch(function(err) {
@@ -58,6 +30,7 @@ var getSummonerID = function(query) {
 					reject(data.status.status_code);
 					return;
 				}
+				console.log('summ id not in db found from api!')
 
 				resolve(data);
 			})
@@ -76,7 +49,23 @@ var getGameCurrent = function(query, summonerObj) {
 			resolve(data);
 		})
 		.catch(function(err) {
-			reject(err);
+			console.log('GCG err = ', err);
+			reject('Summoner Not In Game!');
 		})
 	})
+}
+
+exports.getSummonerGame = function(sumName) {
+	return getSummonerID(sumName).then(function(data) {
+		return data;
+	})
+	.then(function(data) {
+		// console.log('getting curre game = ', sumName, data)
+		return getGameCurrent(sumName, data);
+	})
+	.catch(function(err) {
+		// console.log('get current game err! = ', err)
+		return err;
+	})
+
 }
