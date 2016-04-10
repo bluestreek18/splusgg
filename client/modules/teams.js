@@ -45,10 +45,6 @@ angular.module('splus.teams', [])
 				var matchupPromises = [];
 
 				gameData.data.participants.forEach(function(val, ind) {
-					// if(DataHandler.primaryPlayer.name === val.summonerName) {
-					// 	val.teamId
-					// }
-
 					if(ind <= 4) {
 						DataHandler.blueteam.push(gameData.data.participants[ind]);
 						DataHandler.redteam.push(gameData.data.participants[ind + 5]);

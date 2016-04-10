@@ -203,8 +203,8 @@ angular.module('splus.badges', [])
 
 	var smallStats = function(obj) {
 		stat = obj.summonerChampStats.stats;
-		var minion = stat.totalMinionKills / totalSessionsPlayed;
-		var gold = stat.totalGoldEarned / totalSessionsPlayed;
+		var minion = stat.totalMinionKills / stat.totalSessionsPlayed;
+		var gold = stat.totalGoldEarned / stat.totalSessionsPlayed;
 
 		if(minion > 200) {
 			obj.badges.push({ display: 'Master Minion!' , tooltip: minion + 's Average per Game' });
