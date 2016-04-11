@@ -203,7 +203,7 @@ angular.module('splus.badges', [])
 
 	var smallStats = function(obj) {
 		stat = obj.summonerChampStats.stats;
-		var minion = stat.totalMinionKills / stat.totalSessionsPlayed;
+		var minion = (stat.totalMinionKills / stat.totalSessionsPlayed).toFixed(0);
 		var gold = stat.totalGoldEarned / stat.totalSessionsPlayed;
 
 		if(minion > 200) {
