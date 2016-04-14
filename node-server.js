@@ -39,6 +39,12 @@ app.get('/api/initialgamedata', function(req, res) {
 
 
 	//test
+	store.get(req.sessionID + '5', function(error, sess) {
+	  console.log('checking if session in store! = ', sess);
+	  console.log('check if sess has error = ', error);
+	})
+	var ref = req.get('Referrer');
+	console.log('referrer = ', ref);
 	console.log('session', req.session);
 	console.log('session id = ', req.sessionID);
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
