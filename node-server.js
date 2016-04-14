@@ -5,6 +5,27 @@ var Riot = require('./api/riot');
 var db = require('./api/database');
 var Logic = require('./api/serverlogic');
 var ChampGG = require('./api/championgg');
+var session = require('express-session');
+
+var MongoDBStore = require('connect-mongodb-session')(session);
+var store = new MongoDBStore({ 
+  uri: 'mongodb://localhost:27017/splusgg',
+  collection: 'sessions'
+});
+
+store.on('error', function(error) {
+  console.log('mstore error!', error);
+});
+
+//Fowarding from EXPRESS <-- NGINX <-- CF <-- INTERNET
+app.enable('trust proxy');
+
+app.use(session({
+	secret: 'supersecretysecret',
+	proxy: true,
+	cookie: {secure:true},
+	store: store
+}));
 
 app.use('/', express.static('client'));
 app.use(bodyParser.json());
@@ -13,7 +34,18 @@ app.listen(process.env.PORT || 3005, function() {
 	console.log('Server Started!');
 });
 
+
 app.get('/api/initialgamedata', function(req, res) {
+
+
+	//test
+	console.log('session', req.session);
+	console.log('session id = ', req.sessionID);
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	console.log('ip = ', ip);
+	/////
+
+
 	Logic.getSummonerGame(req.query.name).then(function(data) {
 		// console.log('api init data = ', data)
 		res.send(data);

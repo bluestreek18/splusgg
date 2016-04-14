@@ -20,6 +20,7 @@ MongoClient.connect(url, function (err, db) {
   	db.createCollection('winrates');
   	db.createCollection('playerchampionstats');
   	db.createCollection('championstaticwinratedata');
+  	db.createCollection('sessions');
 
     //HURRAY!! We are connected. :)
     console.log('Connection established to', url);
