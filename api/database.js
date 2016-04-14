@@ -164,7 +164,7 @@ var getStaticDataAge = function() {
 	return new Promise(function(resolve, reject) {
 		db.collection('championstaticwinratedata').findOne({}, 
 			function(err, result) {
-				if(!result.age) {
+				if(!result) {
 					reject(result);
 					return;
 				}
