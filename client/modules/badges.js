@@ -207,7 +207,7 @@ angular.module('splus.badges', [])
 		var gold = stat.totalGoldEarned / stat.totalSessionsPlayed;
 
 		if(minion > 200) {
-			obj.badges.push({ display: 'Master Minion!' , tooltip: minion + 's Average per Game' });
+			obj.badges.push({ display: 'Master Minion!' , tooltip: 'Average ' + minion + 'cs per Game' });
 		}
 		if(gold > 15000) {
 			obj.badges.push({ display: 'Fort Knox!' , tooltip: gold + ' Earned Average per Game!' });
