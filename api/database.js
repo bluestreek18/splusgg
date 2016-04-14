@@ -164,11 +164,16 @@ var getStaticDataAge = function() {
 	return new Promise(function(resolve, reject) {
 		db.collection('championstaticwinratedata').findOne({}, 
 			function(err, result) {
-				console.log('moment! > 3', timeNow.diff(result.age, 'days') > 3);
-				if(err || timeNow.diff(result.age, 'days') > 3) {
+				if(!result.age) {
+					reject(result);
+					return;
+				}
+				else if(err || timeNow.diff(result.age, 'days') > 3) {
 					reject(err);
 					return;
 				}
+
+				console.log('moment! > 3', timeNow.diff(result.age, 'days') > 3);
 				resolve(result);
 			})
 	})
