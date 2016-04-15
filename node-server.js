@@ -44,7 +44,7 @@ app.listen(process.env.PORT || 3005, function() {
 });
 
 
-app.get('/api/initialgamedata', RateSessionCheck, function(req, res) {
+app.get('/riot/initialgamedata', RateSessionCheck, function(req, res) {
 	Logic.getSummonerGame(req.query.name).then(function(data) {
 		// console.log('api init data = ', data)
 		res.send(data);
@@ -56,7 +56,7 @@ app.get('/api/initialgamedata', RateSessionCheck, function(req, res) {
 
 });
 
-app.get('/api/summonerchampionstats', function(req, res) {
+app.get('/riot/summonerchampionstats', RateSessionCheck, function(req, res) {
 	Riot.getSummonerChampionStats(req.query.id, req.query.champid).then(function(champdata) {
 		res.send(champdata);
 	})
@@ -76,7 +76,7 @@ app.get('/api/championstaticdata', function(req, res) {
 
 });
 
-app.get('/api/summonerleaguedata', function(req, res) {
+app.get('/riot/summonerleaguedata', RateSessionCheck, function(req, res) {
 	Riot.getSummonerLeagueData(req.query.ids).then(function(data) {
 		res.send(data);
 	})
