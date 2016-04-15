@@ -9,6 +9,8 @@ var ChampGG = require('./api/championgg');
 var session = require('express-session');
 
 app.enable('trust proxy');
+app.disable('x-powered-by'); //remove express powered by header/production
+
 var MongoDBStore = require('connect-mongodb-session')(session);
 var store = new MongoDBStore({
   uri: 'mongodb://localhost:27017/splusgg',

@@ -15,7 +15,8 @@ module.exports = function(req, res, next) {
 
 	req.locals.store.get(req.sessionID, function(error, sess) {
 		console.log('referrer = ', ref);
-		console.log('cookie = ', sess.cookie.secure);
+		console.log('cookiesecure = ', sess.cookie.secure);
+		console.log('cookie', sess);
 		console.log('geo = ', geo);
 		console.log('ip = ', ip);
 		console.log('userAgent = ', userAgent);
