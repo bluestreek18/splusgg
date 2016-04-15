@@ -3,12 +3,14 @@ var app = express();
 var bodyParser = require('body-parser');
 var Riot = require('./api/riot');
 var db = require('./api/database');
-var Logic = require('./api/serverlogic');
+var Logic = require('./api/middleware/serverlogic');
+var RateSessionCheck = require('./api/middleware/sessioncheck');
 var ChampGG = require('./api/championgg');
 var session = require('express-session');
 
+app.enable('trust proxy');
 var MongoDBStore = require('connect-mongodb-session')(session);
-var store = new MongoDBStore({ 
+var store = new MongoDBStore({
   uri: 'mongodb://localhost:27017/splusgg',
   collection: 'sessions'
 });
@@ -17,41 +19,30 @@ store.on('error', function(error) {
   console.log('mstore error!', error);
 });
 
-//Fowarding from EXPRESS <-- NGINX <-- CF <-- INTERNET
-app.enable('trust proxy');
-
 app.use(session({
-	secret: 'supersecretysecret',
-	proxy: true,
-	cookie: {secure:true},
+	name: 'sgg',
+	secret: 'supersecretysecret45',
+	cookie: { secure: 'auto' },
 	store: store
 }));
 
+//Fowarding from EXPRESS <-- NGINX <-- CF <-- INTERNET
+
+app.use(function(req, res, next) {
+	req.locals = {};
+	req.locals.store = store;
+	next();
+})
+
 app.use('/', express.static('client'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(process.env.PORT || 3005, function() {
 	console.log('Server Started!');
 });
 
 
-app.get('/api/initialgamedata', function(req, res) {
-
-
-	//test
-	store.get(req.sessionID + '5', function(error, sess) {
-	  console.log('checking if session in store! = ', sess);
-	  console.log('check if sess has error = ', error);
-	})
-	var ref = req.get('Referrer');
-	console.log('referrer = ', ref);
-	console.log('session', req.session);
-	console.log('session id = ', req.sessionID);
-	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	console.log('ip = ', ip);
-	/////
-
-
+app.get('/api/initialgamedata', RateSessionCheck, function(req, res) {
 	Logic.getSummonerGame(req.query.name).then(function(data) {
 		// console.log('api init data = ', data)
 		res.send(data);

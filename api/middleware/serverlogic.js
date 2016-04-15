@@ -1,5 +1,5 @@
-var Riot = require('./riot');
-var db = require('./database');
+var Riot = require('../riot');
+var db = require('../database');
 
 exports.getStaticAll = function(array) {
 	if(Array.isArray(array)) {
