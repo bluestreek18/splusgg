@@ -11,6 +11,7 @@ angular.module('splus.teams', [])
 		$scope.gameStarted = gameData.data.gameStartTime;
 		$scope.primaryColor = '';
 		$rootScope.bgid = 'teamsbg';
+		$scope.version = '6.7.1';
 		console.log(DataHandler.gameData)
 
 		$scope.insertData = function() {
