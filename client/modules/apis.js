@@ -42,6 +42,14 @@ angular.module('splus.apis', [])
       })
     };
 
+    var getDataDragonVersion = function() {
+      return $http({
+        method: 'GET',
+        url: '/api/ddversion'
+      })
+    };
+
+
   return {
   	getGameInfo: getGameInfo,
   	getSummonerChampStats: getSummonerChampStats,

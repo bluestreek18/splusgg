@@ -135,3 +135,21 @@ exports.getSummonerLeagueData = function(summonerIds) {
 	})
 }
 
+exports.getDDVersion = function() {
+	return new Promise(function(resolve, reject) {
+		req.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/versions' + Key.apiKey,
+			function(err, resp, body) {
+				if(err || resp.statusCode === 404) {
+					reject(err);
+					return;
+				}
+
+				resolve(body.split('"').slice(1, 2));
+		});
+	})
+}
+
+
+
+
+
