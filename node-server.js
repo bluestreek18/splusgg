@@ -7,9 +7,11 @@ var Logic = require('./api/middleware/serverlogic');
 var RateSessionCheck = require('./api/middleware/sessioncheck');
 var ChampGG = require('./api/championgg');
 var session = require('express-session');
+var Brute = require('./api/middleware/bruteforce');
+var RiotRouter = express.Router();
 
 app.enable('trust proxy');
-app.disable('x-powered-by'); //remove express powered by header/production
+app.disable('x-powered-by');
 
 var MongoDBStore = require('connect-mongodb-session')(session);
 var store = new MongoDBStore({
@@ -43,14 +45,14 @@ app.listen(process.env.PORT || 3005, function() {
 	console.log('Server Started!');
 });
 
+app.use('/riot/', RiotRouter, Brute);  //Rate limit global riot api
+
 
 app.get('/riot/initialgamedata', RateSessionCheck, function(req, res) {
 	Logic.getSummonerGame(req.query.name).then(function(data) {
-		// console.log('api init data = ', data)
 		res.send(data);
 	})
 	.catch(function(err) {
-		// console.log('api/inital err! ', err)
 		res.send(err);
 	})
 

@@ -15,15 +15,14 @@
     "angular-ui-router": "^0.2.18",
     "body-parser": "^1.15.0",
     "connect-mongodb-session": "^1.1.1",
-    "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
+    "express-brute": "^0.6.0",
+    "express-brute-mongo": "^0.1.0",
     "express-session": "^1.13.0",
     "geoip-lite": "^1.1.7",
     "moment": "^2.12.0",
     "mongodb": "^2.1.11",
     "mongoose": "^4.4.10",
-    "oauth2orize": "^1.2.2",
-    "passport-http-bearer": "^1.0.1",
     "request": "^2.69.0"
   }
 }

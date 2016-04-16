@@ -21,7 +21,7 @@ module.exports = function(req, res, next) {
 		console.log('ip = ', ip);
 		console.log('userAgent = ', userAgent);
 
-		if(sess && ref && geo.country === 'US' && userAgent) {
+		if(sess && ref && (geo.country === 'US' || 'CA') && userAgent) {
 			next();
 		} else {
 			res.status(401).send('UnAuthorized');

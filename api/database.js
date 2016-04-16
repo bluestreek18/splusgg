@@ -13,7 +13,7 @@ var url = 'mongodb://localhost:27017/splusgg';
 // Use connect method to connect to the Server
 MongoClient.connect(url, function (err, db) {
   if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
+    console.log('Unable to connect to the mongoDB server. Error: ', err);
   } else {
   	db.createCollection('currentgames');
   	db.createCollection('playerids');
@@ -21,9 +21,10 @@ MongoClient.connect(url, function (err, db) {
   	db.createCollection('playerchampionstats');
   	db.createCollection('championstaticwinratedata');
   	db.createCollection('sessions');
+  	db.createCollection('bruteforce-store');
 
     //HURRAY!! We are connected. :)
-    console.log('Connection established to', url);
+    console.log('Connection established to ', url);
 	}
 
 		//GET DATA

@@ -4,7 +4,7 @@ angular.module('splus.apis', [])
 		var getGameInfo = function(playerName) {
     	return $http({
         method: 'GET',
-        url: '/api/initialgamedata',
+        url: '/riot/initialgamedata',
         params: { "name": playerName }
       })
   	};
@@ -12,7 +12,7 @@ angular.module('splus.apis', [])
   	var getSummonerChampStats = function(playerid, champid) {
     	return $http({
         method: 'GET',
-        url: '/api/summonerchampionstats',
+        url: '/riot/summonerchampionstats',
         params: { id: playerid, champid: champid }
       })
   	};
@@ -28,7 +28,7 @@ angular.module('splus.apis', [])
     var getSummonerLeagueData = function(summonerIds) {
       return $http({
         method: 'GET',
-        url: '/api/summonerleaguedata',
+        url: '/riot/summonerleaguedata',
         params: { ids: summonerIds }
       })
     };
