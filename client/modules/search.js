@@ -16,6 +16,7 @@ angular.module('splus.search', [])
 				else {
 					DataHandler.primaryPlayer.name = $scope.text;
 					DataHandler.gameData = Object.assign({}, resp);
+					console.log(DataHandler.gameData)
 					$state.go('teamstate');
 				}
 			}).catch(function(err) {

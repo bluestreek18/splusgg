@@ -1,21 +1,24 @@
 var Riot = require('../riot');
 var db = require('../database');
 
-exports.getStaticAll = function(array) {
-	if(Array.isArray(array)) {
-		array = array.split(',');
-		var promiseArray = [];
+exports.getStaticAll = function(item) {
+	console.log('getting static data for query string of', item);
+	if(item) {
+		if(item.split(',').length > 1) {
+			item = item.split(',');
+		}
+		
+		if(Array.isArray(item)) {
+			console.log('promsingalling = ', item)
 
-		array.forEach(function(val, ind) {
-			promiseArray.push(db.getOverallChampionStats(val));
-		})
-
-		return Promise.all(promiseArray);
+			return Promise.all(item.map(function(val, ind) {
+				return db.getOverallChampionStats(val);
+			}));
+		}
+		else {
+			return db.getOverallChampionStats(item);
+		}
 	}
-	else {
-		return db.getOverallChampionStats(array);
-	}
-
 }
 
 var getSummonerID = function(query) {

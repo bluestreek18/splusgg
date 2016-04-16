@@ -64,7 +64,7 @@ exports.sortParticipantsByRole = function(par) {  //This function starts on succ
       });
     })
 
-console.log('ROLES', roles);
+// console.log('ROLES', roles);
     var sortedblue = [];
     var sortedred = [];
 
@@ -78,7 +78,7 @@ console.log('ROLES', roles);
       }
     })
 
-    console.log('roles & etc: ', sortedblue, sortedred)
+    // console.log('roles & etc: ', sortedblue, sortedred)
 
 
     sortedblue = checkTeam(sortedblue.slice());

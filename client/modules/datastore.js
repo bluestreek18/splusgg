@@ -18,7 +18,7 @@ angular.module('splus.datastore', [])
 			})
 		}
 
-		var buildPlayerObjects = function() {
+		var buildPlayerObjects = function() {		//The api can accept all the champs at once. Refactor this to do that.
 			return Promise.all(DataHandler.gameData.data.participants.map(function(val) {
 				if(val) {
 					return APIs.getChampStaticData(val.imageUrl);
@@ -26,26 +26,28 @@ angular.module('splus.datastore', [])
 			}));
 		}
 
-		var addBanStatic = function() {
-			var promiseArray = [];
+		var addBanStatic = function() {  //profile icon 1133 is fucked?
+			var queryString = '';
+
 			DataHandler.gameData.data.bannedChampions.forEach(function(item, ind) {
 				if(item) {
-					promiseArray.push(APIs.getChampStaticData(item.championUrl).then(
-					function(data) {
-						if(data) {
-							DataHandler.gameData.data.bannedChampions[ind].role = data.data.role;
-							DataHandler.gameData.data.bannedChampions[ind].staticData = data.data.general;
-							return data.data.general;
-						}
-
-						return 'No staticData Found!';
-					}));
+					queryString += item.championUrl + ',';
 				}
-				
 			})
 
-			return Promise.all(promiseArray);  //test promise.all is doing all calls same time or doing 1 per array item syncronously - use postman gives ms of call
+			queryString = queryString.slice(0, -1);
+			return APIs.getChampStaticData(queryString).then(function(resp) {
+				if(resp) {
+					resp.data.forEach(function(val, ind) {
+						debugger
+						DataHandler.gameData.data.bannedChampions[ind].role = val.role;
+						DataHandler.gameData.data.bannedChampions[ind].staticData = val.general;
+						return val.general;
+					})
+				}
+			})
 		}
+
 
 		var processPlayers = function(result, gameData, res) {
 			result.forEach(function(val, ind) {

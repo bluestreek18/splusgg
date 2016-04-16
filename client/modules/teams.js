@@ -38,6 +38,7 @@ angular.module('splus.teams', [])
 				console.log(err);
 			})
 			.then(function(result) {
+				console.log('build ban static result');
 				gameData.data.bannedChampions.forEach(function(val, ind) {
 					val.teamId === 100 ? DataHandler.bluebans.push(val) : DataHandler.redbans.push(val);
 				})

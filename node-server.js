@@ -45,7 +45,7 @@ app.listen(process.env.PORT || 3005, function() {
 	console.log('Server Started!');
 });
 
-app.use('/riot/', RiotRouter, Brute);  //Rate limit global riot api
+app.use('/riot/', RiotRouter);  //Rate limit global riot api
 
 
 app.get('/riot/initialgamedata', RateSessionCheck, function(req, res) {
@@ -69,7 +69,9 @@ app.get('/riot/summonerchampionstats', RateSessionCheck, function(req, res) {
 });
 
 app.get('/api/championstaticdata', function(req, res) {
+	console.log('champstatic query = ', req.query.champNames);
 	Logic.getStaticAll(req.query.champNames).then(function(results) {
+		console.log('sending static data items!', results);
 		res.send(results);
 	})
 	.catch(function(err) {

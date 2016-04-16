@@ -36,6 +36,7 @@ exports.getCurrentGame = function(id) {
 				}
 
 				var result = JSON.parse(body);
+				console.log(result)
 				if(result.bannedChampions.length === 0) {
 					reject('Not A Ranked Game!');
 				}

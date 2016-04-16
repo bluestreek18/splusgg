@@ -4,7 +4,7 @@
             <div class="bans">
                 <span ng-repeat="ban in bluebans" class="banpercent">
                 <p class="banrates">{{ban.staticData.banRate}}%</p>
-                <img class="bans" ng-src="https://ddragon.leagueoflegends.com/cdn/6.6.1/img/champion/{{ban.championUrl}}.png">
+                <img class="bans" ng-src="https://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/{{ban.championUrl}}.png">
                 </span>
             </div>
             <div class="col-xs-4 col-md-2 col-half-offset col-centered" id="playerbox" ng-repeat="player in blueteam">
@@ -26,9 +26,9 @@
                       <p class="message_username">{{player.summonerName}}</p>
                       <a class="summoners" href=""></a>
                     <div class="summoners">
-                        <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/6.6.1/img/profileicon/{{player.profileIconId}}.png">
-                        <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerOneUrl}}.png">
-                        <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/6.6.1/img/spell/{{player.summonerTwoUrl}}.png">
+                        <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/6.7.1/img/profileicon/{{player.profileIconId}}.png">
+                        <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/6.7.1/img/spell/{{player.summonerOneUrl}}.png">
+                        <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/6.7.1/img/spell/{{player.summonerTwoUrl}}.png">
                     </div>
                       <span class="champion-winloss">Win Rate {{player.summonerChampStats.stats.winRate}}%</span>
                       <span class="trajectory">{{player.last_twenty}}</span>

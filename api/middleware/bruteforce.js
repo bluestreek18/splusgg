@@ -11,6 +11,10 @@ var store = new MongoStore(function (ready) {
   });
 });
 
+var handleStoreError = function(error) {
+  console.log(error);
+}
+
 var globalb = new ExpressBrute(store, {
   freeRetries: 10,
   // proxyDepth: 1,  //is this needed
@@ -23,19 +27,15 @@ var globalb = new ExpressBrute(store, {
   handleStoreError: handleStoreError
 });
 
-var handleStoreError = function(error) {
-  console.log(error);
-}
-
 module.exports = globalb.getMiddleware({
   key: function(req, res, next) {
   	console.log('using globalb middleware!');
-    next();
+  	// console.log('req.brute = ', globalb.options)
+  	var test = globalb.getIPFromRequest(req);
+  	console.log('ip = ', test);
+    next('Global Rate Limit');
   },
-  ignoreIP: true,
-  getIPFromRequest: function(req) {
-  	console.log('ip of req = ', req);
-  }
+  ignoreIP: true
 })
 
 

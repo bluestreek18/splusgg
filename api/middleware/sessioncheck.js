@@ -12,6 +12,9 @@ module.exports = function(req, res, next) {
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 	var userAgent = req.headers['user-agent'];
 	var geo = geoip.lookup(ip);
+	if(!geo) {
+		geo = 'NOT FOUND';
+	}
 
 	req.locals.store.get(req.sessionID, function(error, sess) {
 		console.log('referrer = ', ref);
@@ -21,7 +24,8 @@ module.exports = function(req, res, next) {
 		console.log('ip = ', ip);
 		console.log('userAgent = ', userAgent);
 
-		if(sess && ref && (geo.country === 'US' || 'CA') && userAgent) {
+		if(sess && !ref && (geo.country === 'US' || 'CA') && userAgent) {
+			console.log('user allowed!')  //Should all be true. Reversed for testing.
 			next();
 		} else {
 			res.status(401).send('UnAuthorized');
