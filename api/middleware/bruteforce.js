@@ -16,8 +16,8 @@ var handleStoreError = function(error) {
 }
 
 var globalb = new ExpressBrute(store, {
-  freeRetries: 10,
-  // proxyDepth: 1,  //is this needed
+  freeRetries: 2,
+  proxyDepth: 2,  //is this needed
   attachResetToRequest: false,
   refreshTimeoutOnRequest: false,
   minWait: 1000, 	// 1 day 1 hour (should never reach this wait time)

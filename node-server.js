@@ -100,12 +100,11 @@ app.get('/api/champmatchupdatagg', function(req, res) {
 });
 
 app.get('/riot/ddversion', function(req, res) {	//Riot static data api, doesn't count toward rate limit.
-	// Riot.getDDVersion().then(function(data) {
-	// 	res.send(data);
-	// })
-	// .catch(function(err) {
-	// 	res.send(err);
-	// })
-	console.log('called riot dd api!')
+	Riot.getDDVersion().then(function(data) {
+		res.send(data);
+	})
+	.catch(function(err) {
+		res.send(err);
+	})
 
 });
