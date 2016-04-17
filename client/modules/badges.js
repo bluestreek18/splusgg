@@ -219,6 +219,9 @@ angular.module('splus.badges', [])
 		while(champ.badges.length > 5) {
 			champ.badges.shift();
 		}
+		if(champ.badges.length === 0) {
+			champ.badges.push({ display: 'First Game ' + champ.championName + '!', tooltip: 'GG FF 20...' });
+		}
 	}
 
 		return {

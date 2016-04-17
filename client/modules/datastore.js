@@ -39,7 +39,6 @@ angular.module('splus.datastore', [])
 			return APIs.getChampStaticData(queryString).then(function(resp) {
 				if(resp) {
 					resp.data.forEach(function(val, ind) {
-						debugger
 						DataHandler.gameData.data.bannedChampions[ind].role = val.role;
 						DataHandler.gameData.data.bannedChampions[ind].staticData = val.general;
 						return val.general;
