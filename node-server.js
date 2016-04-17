@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var Riot = require('./api/riot');
 var db = require('./api/database');
 var Logic = require('./api/middleware/serverlogic');
-var RateSessionCheck = require('./api/middleware/sessioncheck');
 var ChampGG = require('./api/championgg');
 var session = require('express-session');
 var Brute = require('./api/middleware/bruteforce');
@@ -45,10 +44,10 @@ app.listen(process.env.PORT || 3005, function() {
 	console.log('Server Started!');
 });
 
-app.use('/riot/', RiotRouter);  //Rate limit global riot api
+app.use('/riot/', RiotRouter, Brute);  //Rate limit global riot api
 
 
-app.get('/riot/initialgamedata', RateSessionCheck, function(req, res) {
+app.get('/riot/initialgamedata', function(req, res) {
 	Logic.getSummonerGame(req.query.name).then(function(data) {
 		res.send(data);
 	})
@@ -58,7 +57,7 @@ app.get('/riot/initialgamedata', RateSessionCheck, function(req, res) {
 
 });
 
-app.get('/riot/summonerchampionstats', RateSessionCheck, function(req, res) {
+app.get('/riot/summonerchampionstats', function(req, res) {
 	Riot.getSummonerChampionStats(req.query.id, req.query.champid).then(function(champdata) {
 		res.send(champdata);
 	})
@@ -80,7 +79,7 @@ app.get('/api/championstaticdata', function(req, res) {
 
 });
 
-app.get('/riot/summonerleaguedata', RateSessionCheck, function(req, res) {
+app.get('/riot/summonerleaguedata', function(req, res) {
 	Riot.getSummonerLeagueData(req.query.ids).then(function(data) {
 		res.send(data);
 	})
@@ -100,12 +99,13 @@ app.get('/api/champmatchupdatagg', function(req, res) {
 
 });
 
-app.get('/api/ddversion', function(req, res) {	//Riot static data api, doesn't count toward rate limit.
-	Riot.getDDVersion().then(function(data) {
-		res.send(data);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
+app.get('/riot/ddversion', function(req, res) {	//Riot static data api, doesn't count toward rate limit.
+	// Riot.getDDVersion().then(function(data) {
+	// 	res.send(data);
+	// })
+	// .catch(function(err) {
+	// 	res.send(err);
+	// })
+	console.log('called riot dd api!')
 
 });
