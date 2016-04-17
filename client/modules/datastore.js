@@ -15,6 +15,11 @@ angular.module('splus.datastore', [])
 						DataHandler.primaryPlayer.tier = val.tierData.tier;
 					}
 				}
+				else {
+					val.tierData = {};
+					val.tierData.tier = 'i';
+					val.tierData.division = 'unranked';
+				}
 			})
 		}
 
