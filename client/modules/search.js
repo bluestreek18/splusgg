@@ -20,6 +20,7 @@ angular.module('splus.search', [])
 					$state.go('teamstate');
 				}
 			}).catch(function(err) {
+				console.log('catch err! = ', err);
 				$scope.error = 'Summoner Not in Game!';
 			})
 
