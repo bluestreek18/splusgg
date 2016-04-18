@@ -68,9 +68,7 @@ app.get('/riot/summonerchampionstats', function(req, res) {
 });
 
 app.get('/api/championstaticdata', function(req, res) {
-	console.log('champstatic query = ', req.query.champNames);
 	Logic.getStaticAll(req.query.champNames).then(function(results) {
-		console.log('sending static data items!', results);
 		res.send(results);
 	})
 	.catch(function(err) {
@@ -91,6 +89,17 @@ app.get('/riot/summonerleaguedata', function(req, res) {
 
 app.get('/api/champmatchupdatagg', function(req, res) {
 	ChampGG.getChampionMatchupData(req.query.name1, req.query.name2).then(function(data) {
+		res.send(data);
+	})
+	.catch(function(err) {
+		res.send(err);
+	})
+
+});
+
+
+app.get('/riot/getsummrecentgames', function(req, res) {
+	Riot.getRecentGames(req.query.id).then(function(data) {
 		res.send(data);
 	})
 	.catch(function(err) {

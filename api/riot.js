@@ -149,7 +149,11 @@ exports.getDDVersion = function() {
 	})
 }
 
+exports.get
 
+//get ranked game list of prev
+// https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/70309179?rankedQueues=TEAM_BUILDER_DRAFT_RANKED_5x5&seasons=SEASON2016&api_key=56a36ccc-4279-4116-aec7-76abb01066af
 
-
+//get recetn games with info for each game 
+//https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/70309179/recent?api_key=56a36ccc-4279-4116-aec7-76abb01066af
 

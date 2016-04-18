@@ -64,7 +64,6 @@ exports.sortParticipantsByRole = function(par) {  //This function starts on succ
       });
     })
 
-// console.log('ROLES', roles);
     var sortedblue = [];
     var sortedred = [];
 

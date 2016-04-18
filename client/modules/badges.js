@@ -183,6 +183,7 @@ angular.module('splus.badges', [])
 	var firstBlood = function(obj) {
 		stat = obj.summonerChampStats.stats;
 		fb = (stat.totalFirstBlood / stat.totalSessionsPlayed) * 100;
+		debugger
 
 		if(fb > 90) {
 			obj.badges.push({ display: 'Bro Pls!!?' , tooltip: fb + '% FirstBloods!' });
@@ -228,3 +229,5 @@ angular.module('splus.badges', [])
 			createBadgeProfiles: createBadgeProfiles
 		}
 	})
+
+

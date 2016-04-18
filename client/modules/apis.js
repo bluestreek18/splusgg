@@ -49,13 +49,22 @@ angular.module('splus.apis', [])
       })
     };
 
+    var getSummonerRecentGames = function(id) {
+      return $http({
+        method: 'GET',
+        url: '/riot/getsummrecentgames',
+        params: { id: id }
+      })
+    };
 
   return {
   	getGameInfo: getGameInfo,
   	getSummonerChampStats: getSummonerChampStats,
     getChampStaticData: getChampStaticData,
     getSummonerLeagueData: getSummonerLeagueData,
-    getChampionMatchupData: getChampionMatchupData
+    getChampionMatchupData: getChampionMatchupData,
+    getDataDragonVersion: getDataDragonVersion,
+    getSummonerRecentGames: getSummonerRecentGames
   }
 
 })
