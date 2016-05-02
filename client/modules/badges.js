@@ -211,7 +211,7 @@ angular.module('splus.badges', [])
 			obj.badges.push({ display: 'Master Minion!' , tooltip: 'Average ' + minion + 'cs per Game' });
 		}
 		if(gold > 15000) {
-			obj.badges.push({ display: 'Fort Knox!' , tooltip: gold + ' Earned Average per Game!' });
+			obj.badges.push({ display: 'Fort Knox!' , tooltip: gold.toFixed(0) + ' Earned Average per Game!' });
 		}
 	}
 
