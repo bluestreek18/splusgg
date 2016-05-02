@@ -6,7 +6,7 @@ var db = require('./database');
 //Summoner v1.4
 exports.getSummonerID = function(name) {
 	return new Promise(function(resolve, reject) {
-		req.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + name + Key.apiKey, 
+		req.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + name + process.env.apiKey,
 			function(err, resp, body) {
 				if(err) {
 					reject(err);
@@ -28,7 +28,7 @@ exports.getSummonerID = function(name) {
 //Do not cache any of this. Waste of time!
 exports.getCurrentGame = function(id) {
 	return new Promise(function(resolve, reject) {
-		req.get('https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/NA1/' + id + Key.apiKey, 
+		req.get('https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/NA1/' + id + process.env.apiKey, 
 			function(err, resp, body) {
 				if(err || resp.statusCode !== 200) {
 					reject(resp.statusCode);
@@ -54,7 +54,7 @@ exports.getCurrentGame = function(id) {
 //Matchlist v2.2
 exports.getMatchSummaryRanked = function(id) {
 	return new Promise(function(resolve, reject) {
-		req.get('https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/' + id + '?rankedQueues=RANKED_SOLO_5x5&seasons=SEASON2016&' + Key.apiKey, 
+		req.get('https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/' + id + '?rankedQueues=RANKED_SOLO_5x5&seasons=SEASON2016&' + process.env.apiKey, 
 			function(err, resp, body) {
 				if(err) {
 					reject(err);
@@ -68,13 +68,14 @@ exports.getMatchSummaryRanked = function(id) {
 //Game v1.3
 exports.getRecentGames = function(id) {
 	return new Promise(function(resolve, reject) {
-		req.get('https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/' + id + '/recent' + Key.apiKey, 
+		req.get('https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/' + id + '/recent' + process.env.apiKey, 
 			function(err, resp, body) {
 				if(err) {
 					reject(err);
 					return;
 				}
-				resolve(body, resp);
+				
+				resolve(Process.processPlayerRecentGames(JSON.parse(body)));
 			})
 	})
 }
@@ -82,7 +83,7 @@ exports.getRecentGames = function(id) {
 //Match v2.2
 exports.getMatchById = function(matchId) {
 	return new Promise(function(resolve, reject) {
-		req.get('https://na.api.pvp.net/api/lol/na/v2.2/match/' + matchId + Key.apiKey, 
+		req.get('https://na.api.pvp.net/api/lol/na/v2.2/match/' + matchId + process.env.apiKey, 
 			function(err, resp, body) {
 				if(err) {
 					reject(err);
@@ -100,7 +101,7 @@ exports.getSummonerChampionStats = function(summid, champid) {
 			resolve(resultdata);
 		})
 		.catch(function() {
-			req.get('https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/' + summid + '/ranked?season=SEASON2016&' + Key.apiKey.slice(1),
+			req.get('https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/' + summid + '/ranked?season=SEASON2016&' + process.env.apiKey.slice(1),
 				function(err, resp, body) {
 					// console.log('response body', body)
 					if(err || resp.status_code === 404) {
@@ -123,7 +124,7 @@ exports.getSummonerChampionStats = function(summid, champid) {
 //League Data v2.5 / No need for caching, one call per game
 exports.getSummonerLeagueData = function(summonerIds) {
 	return new Promise(function(resolve, reject) {
-		req.get('https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + summonerIds + '/entry' + Key.apiKey,
+		req.get('https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + summonerIds + '/entry' + process.env.apiKey,
 			function(err, resp, body) {
 				console.log('get league data code: === ', resp.statusCode)
 				if(err || resp.statusCode === 404) {
@@ -137,7 +138,7 @@ exports.getSummonerLeagueData = function(summonerIds) {
 
 exports.getDDVersion = function() {
 	return new Promise(function(resolve, reject) {
-		req.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/versions' + Key.apiKey,
+		req.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/versions' + process.env.apiKey,
 			function(err, resp, body) {
 				if(err || resp.statusCode === 404) {
 					reject(err);
@@ -149,7 +150,6 @@ exports.getDDVersion = function() {
 	})
 }
 
-exports.get
 
 //get ranked game list of prev
 // https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/70309179?rankedQueues=TEAM_BUILDER_DRAFT_RANKED_5x5&seasons=SEASON2016&api_key=56a36ccc-4279-4116-aec7-76abb01066af

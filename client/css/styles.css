@@ -19,6 +19,13 @@
                0px 18px 23px rgba(0,0,0,0.1);
 }
 
+.progress {
+  background-color: none;
+  height: 50px !important;
+  font-size: 22px;
+  font-family: Avenir;
+}
+
 .form-group {
 	padding-top: 100px;
 	margin: auto;
@@ -170,7 +177,15 @@ p {
 }
 
 .tooltip.redbadge {
-	color: red;
+	background-color: rgba(255, 0, 57, 0.81);
+}
+
+.redbadge {
+  background-color: rgba(255, 0, 57, 0.70);
+}
+
+.bluebadge {
+  
 }
 
 .badge {

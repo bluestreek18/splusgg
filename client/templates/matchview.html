@@ -12,11 +12,15 @@
             <div class="col-xs-4 col-md-2 col-half-offset col-centered" id="playerbox" ng-repeat="player in blueteam">
                       <div class="playerframe">
                       <span class="txtoverlay">
-                      <p class="overall rank">Role Rank: {{player.champStaticData.general.overallPosition}}<br>
-                                                         {{player.champStaticData.general.winPercent}}%</p>
+                      <div class="roleicon">
+                      <span uib-tooltip="This player plays {{player.recentGames.commonRoles[0].role}}{{player.recentGames.commonRoles[0].value}}% of the time." class="badge rolebadge" tooltip-placement="bottom auto"><img class="roleimgs" ng-src="https://splus.gg/role-icons/{{player.recentGames.commonRoles[0].role}}.png"></span>
+                      </div>
+                      <p class="overall rank"><span uib-tooltip="{{player.imageUrl}} is ranked {{player.champStaticData.general.overallPosition}} overall for this role." class="badge bluebadge" tooltip-placement="bottom auto">Role Rank: {{player.champStaticData.general.overallPosition}}</span><br>
+                      <span uib-tooltip="{{player.imageUrl}} has an overall win rate of {{player.champStaticData.general.winPercent}}%." class="badge bluebadge" tooltip-placement="bottom auto">{{player.champStaticData.general.winPercent}}%</span></p>
+
                       <img class="tiericon" ng-src="../img/tier-icons/tier_icons/{{player.tierData.tier}}_{{player.tierData.division}}.png">
                       <div ng-repeat="item in player.badges" class="badges">
-                        <span uib-tooltip="{{item.tooltip}}" tooltip-class="bluebadge" class="badge">{{item.display}}</span>
+                        <span uib-tooltip="{{item.tooltip}}" class="badge bluebadge">{{item.display}}</span>
                       </div>
                       </span>
                         <img class="profilesize" ng-src="https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{player.imageUrl}}_0.jpg">
@@ -31,10 +35,10 @@
                         <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/{{version}}/img/profileicon/{{player.profileIconId}}.png">
                         <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/{{version}}/img/spell/{{player.summonerOneUrl}}.png">
                         <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/{{version}}/img/spell/{{player.summonerTwoUrl}}.png">
-                        <span class="champion-winloss"><br>Win Rate {{player.summonerChampStats.stats.winRate}}%</span>
+
+                        <span class="champion-winloss"><br><span uib-tooltip="{{player.summonerName}} has a {{player.summonerChampStats.stats.winRate}}% win rate on {{player.imageUrl}}." class="badge bluebadge">Win Rate: {{player.summonerChampStats.stats.winRate}}%</span></span>
+
                     </div>
-                      <span class="trajectory">{{player.last_twenty}}</span>
-                      <span class="roles">{{player.common_roles}}</span>
                     </div>
                     </div>
                   </div>
@@ -72,11 +76,13 @@
             <div class="col-xs-4 col-md-2 col-half-offset col-centered" id="playerbox" ng-repeat="player in redteam">
                       <div class="playerframe">
                       <span class="txtoverlay">
-                      <p class="overall rank">Role Rank: {{player.champStaticData.general.overallPosition}}<br>
-                                                         {{player.champStaticData.general.winPercent}}%</p>
+                      
+                      <p class="overall rank"><span uib-tooltip="{{player.imageUrl}} is ranked {{player.champStaticData.general.overallPosition}} overall for this role." class="badge redbadge" tooltip-placement="bottom auto">Role Rank: {{player.champStaticData.general.overallPosition}}</span><br>
+                      <span uib-tooltip="{{player.imageUrl}} has an overall win rate of {{player.champStaticData.general.winPercent}}%." class="badge redbadge" tooltip-placement="bottom auto">{{player.champStaticData.general.winPercent}}%</span></p>
+
                       <img class="tiericon" ng-src="../img/tier-icons/tier_icons/{{player.tierData.tier}}_{{player.tierData.division}}.png">
                       <div ng-repeat="item in player.badges" class="badges">
-                        <span uib-tooltip="{{item.tooltip}}" tooltip-class="redbadge" class="badge">{{item.display}}</span>
+                        <span uib-tooltip="{{item.tooltip}}" class="badge redbadge">{{item.display}}</span>
                       </div>
                       </span>
                         <img class="profilesize" ng-src="https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{player.imageUrl}}_0.jpg">
@@ -91,8 +97,13 @@
                         <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/{{version}}/img/profileicon/{{player.profileIconId}}.png">
                         <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/{{version}}/img/spell/{{player.summonerOneUrl}}.png">
                         <img class="sumimages" ng-src="https://ddragon.leagueoflegends.com/cdn/{{version}}/img/spell/{{player.summonerTwoUrl}}.png">
-                        <span class="champion-winloss"><br>Win Rate {{player.summonerChampStats.stats.winRate}}%</span>
+
+                        <span class="champion-winloss"><br><span uib-tooltip="{{player.summonerName}} has a {{player.summonerChampStats.stats.winRate}}% win rate on {{player.imageUrl}}." class="badge redbadge">Win Rate: {{player.summonerChampStats.stats.winRate}}%</span></span>
+                       
                     </div>
+
+                      <!-- <uib-progress><uib-bar ng-repeat="bar in stacked track by $index" value="bar.value" type="{{bar.type}}"><span>{{bar.value}}%</span></uib-bar></uib-progress> -->
+
                       <span class="trajectory">{{player.last_twenty}}</span>
                       <span class="roles">{{player.common_roles}}</span>
                     </div>

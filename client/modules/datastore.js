@@ -31,7 +31,7 @@ angular.module('splus.datastore', [])
 			}));
 		}
 
-		var addBanStatic = function() {  //profile icon 1133 is fucked?
+		var addBanStatic = function() { 
 			var queryString = '';
 
 			DataHandler.gameData.data.bannedChampions.forEach(function(item, ind) {
@@ -100,12 +100,23 @@ angular.module('splus.datastore', [])
 		var getSummonerChampionStats = function() {
 			var array = [];
 			DataHandler.gameData.data.participants.forEach(function(val, index) {
-				if(index <= 4 && val) { // RATE LIMIT temporarily!!! also checking summoner isnt null
+				if(val) { // RATE LIMIT temporarily!!! also checking summoner isnt null
 					array.push(APIs.getSummonerChampStats(val.summonerId, val.championId));
 				}
 			})
 			
 			return Promise.all(array);
+		}
+
+		// team here is the string 'redteam' or 'blueteam'
+		var teamRecentGames = function() {
+			return Promise.all(DataHandler.gameData.data.participants.map(function(val) {
+				return APIs.getSummonerRecentGames(val.summonerId)
+					.then(function(data) {
+						console.log('data from recent games = ', data)
+						val.recentGames = data.data;
+					})
+			}))
 		}
 
 		return { //dont need to expose this many methods.
@@ -114,7 +125,8 @@ angular.module('splus.datastore', [])
 			addBanStatic: addBanStatic,
 			processPlayers: processPlayers,
 			getSummonerChampionStats: getSummonerChampionStats,
-			processMatchupData: processMatchupData
+			processMatchupData: processMatchupData,
+			teamRecentGames: teamRecentGames
 		}
 
 	})

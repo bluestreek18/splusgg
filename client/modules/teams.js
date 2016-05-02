@@ -11,10 +11,11 @@ angular.module('splus.teams', [])
 		$scope.gameStarted = gameData.data.gameStartTime;
 		$scope.primaryColor = '';
 		$rootScope.bgid = 'teamsbg';
-		$scope.version = '6.7.1';
-		console.log(DataHandler.gameData)
+		$scope.version = '6.9.1';
+	
 
 		$scope.insertData = function() {
+			var playerObjBuild;
 			var resp;
 			BuildData.getSummonerChampionStats().then(function(res) {
 				console.log('Champ Stats! = ', res);
@@ -25,13 +26,18 @@ angular.module('splus.teams', [])
 				console.log(err);
 			})
 			.then(function(result) {
-				console.log('stati data result = ', result)
-				return BuildData.processPlayers(result, gameData, resp);
+				playerObjBuild = result;
+				
+				return BuildData.teamRecentGames()
+			})
+			.then(function(data) {
+				return BuildData.processPlayers(playerObjBuild, gameData, resp);
 			})
 			.catch(function(err) {
 				console.log(err);
 			})
 			.then(function(result) {
+				console.log('gameData = ', gameData.data)
 				BuildData.getTierData(result);
 				return BuildData.addBanStatic();
 			})
@@ -39,7 +45,7 @@ angular.module('splus.teams', [])
 				console.log(err);
 			})
 			.then(function(result) {
-				console.log('build ban static result');
+
 				gameData.data.bannedChampions.forEach(function(val, ind) {
 					val.teamId === 100 ? DataHandler.bluebans.push(val) : DataHandler.redbans.push(val);
 				})
@@ -57,14 +63,13 @@ angular.module('splus.teams', [])
 						champid2 = DataHandler.redteam[ind].imageUrl;
 						champid1 = champid1.replace(/\s+/g, '');
 						champid2 = champid2.replace(/\s+/g, '');
-						matchupPromises.push(APIs.getChampionMatchupData(champid1, champid2));
 
-						if(ind <= 4) {
-							Badges.createBadgeProfiles(gameData.data.participants[ind]);
-						}
+						matchupPromises.push(APIs.getChampionMatchupData(champid1, champid2));
 					}
+
+					Badges.createBadgeProfiles(gameData.data.participants[ind]);
 				})
-				
+
 				return Promise.all(matchupPromises);
 			})
 			.catch(function(err) {

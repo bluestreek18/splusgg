@@ -16,7 +16,7 @@ var handleStoreError = function(error) {
 }
 
 var globalb = new ExpressBrute(store, {
-  freeRetries: 10,
+  freeRetries: 3000,
   proxyDepth: 1,  //is this needed
   attachResetToRequest: false,
   refreshTimeoutOnRequest: false,
@@ -29,7 +29,6 @@ var globalb = new ExpressBrute(store, {
 
 module.exports = globalb.getMiddleware({
   key: function(req, res, next) {
-  	console.log('using globalb middleware!');
   	var ip = globalb.getIPFromRequest(req);
   	console.log('ip = ', ip);
     next();

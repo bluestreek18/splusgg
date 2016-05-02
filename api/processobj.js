@@ -24,6 +24,77 @@ exports.addImageData = function(obj) {
 
 }
 
+exports.processPlayerRecentGames = function(gameArray) {
+
+    var adc = { role: 'ADC', value: 0, type: 'danger' };
+    var jungle = { role: 'Jungle', value: 0, type: 'success' };
+    var support = { role: 'Support', value: 0, type: 'info' };
+    var top = { role: 'Top', value: 0, type: 'warning' };
+    var middle = { role: 'Middle', value: 0, type: 'info' };
+
+    var gameObj = {
+      summonerId: gameArray.summonerId,
+      gamesWon: 0,
+      gamesLost: 0,
+      gamesTotal: 0,
+      commonRoles: [],
+      numDeaths: 0,
+      numKills: 0,
+      numAssists: 0,
+      kda: 0,
+      gameId: 0,
+      championId: 0,
+      wardPlaced: 0
+    };
+
+    if(gameArray.games) {
+      gameArray.games.forEach(function(val) {
+
+        if(val.stats.win) {
+          ++gameObj.gamesWon
+        } else {
+          ++gameObj.gamesLost
+        }
+
+        if(val.stats.numDeaths) gameObj.numDeaths += val.stats.numDeaths;
+        if(val.stats.championsKilled) gameObj.numKills += val.stats.championsKilled;
+        if(val.stats.wardPlaced) gameObj.wardPlaced += val.stats.wardPlaced;
+        if(val.stats.assists) gameObj.numAssists += val.stats.assists;
+
+        gameObj.gameId = val.gameId;
+        gameObj.championId = val.championId;
+        
+        if(val.stats.playerPosition === 4 && val.stats.playerRole === 4) {
+          adc.value += 10;
+        }
+        else if(val.stats.playerPosition === 4) {
+          support.value += 10;
+        }
+        else if(val.stats.playerPosition === 3) {
+          jungle.value += 10;
+        }
+        else if(val.stats.playerPosition === 2) {
+          middle.value += 10;
+        }
+        else if(val.stats.playerPosition === 1) {
+          top.value += 10;
+        }
+        
+      })
+
+      gameObj.commonRoles.push(adc, jungle, support, top, middle);
+      gameObj.commonRoles.sort( (a, b) => a.value < b.value);
+      gameObj.commonRoles = gameObj.commonRoles.slice(0, 3);
+
+      gameObj.kda = ((gameObj.numKills + gameObj.numAssists) / gameObj.numDeaths).toFixed(2);
+      gameObj.kda = Number(gameObj.kda);
+      gameObj.gamesTotal = gameObj.gamesLost + gameObj.gamesWon;
+      gameObj.wardPlaced = gameObj.wardPlaced / gameObj.gamesTotal;
+    }
+    
+    return gameObj;
+  }
+
 exports.processSummonerChampionData = function(obj, champid) {
   return new Promise(function(resolve, reject) {
     if(!obj) {
