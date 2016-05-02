@@ -85,6 +85,29 @@ exports.processPlayerRecentGames = function(gameArray) {
       gameObj.commonRoles.push(adc, jungle, support, top, middle);
       gameObj.commonRoles.sort( (a, b) => a.value < b.value);
       gameObj.commonRoles = gameObj.commonRoles.slice(0, 3);
+      if(gameObj.commonRoles[2].value === 0) {
+        gameObj.commonRoles = gameObj.commonRoles.slice(0, 2);
+      }
+      if(gameObj.commonRoles[1].value === 0) {
+        gameObj.commonRoles = gameObj.commonRoles.slice(0, 1);
+      }
+
+      var total = 0;
+      gameObj.commonRoles.forEach(function(val) {
+        total += val.value;
+      });
+      gameObj.commonRoles.forEach(function(val, ind) {
+        val.value = val.value / total;
+        val.value = (val.value * 100).toFixed(0);
+      })
+
+      if(gameObj.commonRoles[0] && gameObj.commonRoles[1] && (gameObj.commonRoles[0].value + gameObj.commonRoles[1].value <= 60)) {
+        console.log('gameObj.commonRoles = ', gameObj.commonRoles)
+        console.log('Detected Fill!')
+        var percent = gameObj.commonRoles[0].value;
+        gameObj.commonRoles = [];
+        gameObj.commonRoles.push({ role: 'Fill', value: percent, type: 'success' })
+      }
 
       gameObj.kda = ((gameObj.numKills + gameObj.numAssists) / gameObj.numDeaths).toFixed(2);
       gameObj.kda = Number(gameObj.kda);

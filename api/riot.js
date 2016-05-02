@@ -1,6 +1,5 @@
 var req = require('request');
 var Process = require('./processobj');
-var Key = require('./key');
 var db = require('./database');
 
 //Summoner v1.4

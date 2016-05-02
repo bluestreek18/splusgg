@@ -26,6 +26,28 @@
   font-family: Avenir;
 }
 
+.roleimgs {
+  height: 25px;
+  display: block;
+}
+
+.tooltip {
+  min-width: 150px !important;
+}
+
+.roleicon {
+  position: absolute;
+  margin-top: -59px;
+}
+
+span.badge.bluebadge.cwinloss.ng-binding {
+  background-color: rgba(39, 39, 39);
+}
+
+span.badge.redbadge.cwinloss.ng-binding {
+  background-color: rgba(39, 39, 39);
+}
+
 .form-group {
 	padding-top: 100px;
 	margin: auto;
@@ -188,6 +210,10 @@ p {
   
 }
 
+span.badge.rolebadge {
+  background-color: rgba(240, 248, 255, 0.37);
+}
+
 .badge {
 	border-radius: 2px;
 	white-space: nowrap;
@@ -195,7 +221,7 @@ p {
 
 .tiericon {
 	width: 40%;
-	padding-top: 6em;
+	padding-top: 6.5em;
 }
 
 .bluebanner {
