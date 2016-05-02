@@ -9,6 +9,7 @@ angular.module('splus.badges', [])
 				getKDA(champ);
 				firstBlood(champ);
 				smallStats(champ);
+				checkLastTenGames(champ);
 
 
 				checkLength(champ);
@@ -28,10 +29,9 @@ angular.module('splus.badges', [])
 			var played = obj.summonerChampStats.stats.totalSessionsPlayed;
 			var pString = played + ' Games Played!';
 
-			if(obj.summonerName === 'Just Call Saul') {
+			if(obj.summonerName === "Just Call Saul" || obj.summonerName === "Jhin Main AMA") {
 				obj.badges.push({ display: obj.championName + ' GOD!', tooltip: 92348231656748 + ' Games Played! Insanity...' });
 				obj.badges.push({ display: 'Absolute Monster ...', tooltip: ' Quit now. This player is out of Control. ' });
-				array.badges.push({ display: array.championName + ' Penta Kills!', tooltip: 'TotalPentaKills: ' + 58 });
 			}
 			else if(played === 0) {
 				obj.badges.push({ display: 'First Time ' + obj.championName + '!', tooltip: 'Hopefully they played a normal...'});
@@ -183,7 +183,6 @@ angular.module('splus.badges', [])
 	var firstBlood = function(obj) {
 		stat = obj.summonerChampStats.stats;
 		fb = (stat.totalFirstBlood / stat.totalSessionsPlayed) * 100;
-		debugger
 
 		if(fb > 90) {
 			obj.badges.push({ display: 'Bro Pls!!?' , tooltip: fb + '% FirstBloods!' });
@@ -207,9 +206,16 @@ angular.module('splus.badges', [])
 		var minion = (stat.totalMinionKills / stat.totalSessionsPlayed).toFixed(0);
 		var gold = stat.totalGoldEarned / stat.totalSessionsPlayed;
 
-		if(minion > 200) {
+		if(minion > 400) {
+			obj.badges.push({ display: 'The Flood!' , tooltip: 'Average ' + minion + 'CS per Game' });
+		}
+		else if(minion > 300) {
+			obj.badges.push({ display: 'Enemy of the Machines!' , tooltip: 'Average ' + minion + 'CS per Game' });
+		}
+		else if(minion > 200) {
 			obj.badges.push({ display: 'Master Minion!' , tooltip: 'Average ' + minion + 'cs per Game' });
 		}
+
 		if(gold > 15000) {
 			obj.badges.push({ display: 'Fort Knox!' , tooltip: gold.toFixed(0) + ' Earned Average per Game!' });
 		}
@@ -223,6 +229,56 @@ angular.module('splus.badges', [])
 		if(champ.badges.length === 0) {
 			champ.badges.push({ display: 'First Game ' + champ.championName + '!', tooltip: 'GG FF 20...' });
 		}
+	}
+
+	var checkLastTenGames = function(champ) {
+		console.log('checkLastTenGames = ', champ.recentGames)
+		debugger
+
+		if(champ.recentGames.wardPlaced > 40) {
+			champ.badges.push({ display: 'Ward\'s OP!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		}
+		else if(champ.recentGames.wardPlaced > 30) {
+			champ.badges.push({ display: 'Ward Spammer!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		}
+		else if(champ.recentGames.wardPlaced > 20) {
+			champ.badges.push({ display: 'Ward King!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		}
+		else if(champ.recentGames.wardPlaced > 15) {
+			champ.badges.push({ display: 'Not A Bronze Warder!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		}
+
+		if(champ.summonerName === 'Jhin Main AMA') {
+			champ.badges.push({ display: 'This Cheater Still Buys Wards!' + '!', tooltip: 'Averages 45749486867 Wards per Game.' });
+		}
+		
+		if(champ.recentGames.gamesWon > 10) {
+			champ.badges.push({ display: 'Killionaire!', tooltip: '10 in a Row... Insane!' });
+			champ.badges.push({ display: 'Invincible!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		}
+		else if(champ.recentGames.gamesWon > 9) {
+			champ.badges.push({ display: 'Killpocalypse!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		}
+		else if(champ.recentGames.gamesWon > 8) {
+			champ.badges.push({ display: 'Killtastrophe!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		}
+		else if(champ.recentGames.gamesWon > 7) {
+			champ.badges.push({ display: 'Killimanjaro!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		}
+
+		if(champ.recentGames.kda > 6) {
+			champ.badges.push({ display: 'Perfection!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		}
+		else if(champ.recentGames.kda > 5) {
+			champ.badges.push({ display: 'Hail to the King!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		}
+		else if(champ.recentGames.kda > 4) {
+			champ.badges.push({ display: 'Rampage!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		}
+		else if(champ.recentGames.kda > 3) {
+			champ.badges.push({ display: 'Open Season!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		}
+
 	}
 
 		return {

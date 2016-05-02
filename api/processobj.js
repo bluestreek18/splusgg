@@ -102,8 +102,6 @@ exports.processPlayerRecentGames = function(gameArray) {
       })
 
       if(gameObj.commonRoles[0] && gameObj.commonRoles[1] && (gameObj.commonRoles[0].value + gameObj.commonRoles[1].value <= 60)) {
-        console.log('gameObj.commonRoles = ', gameObj.commonRoles)
-        console.log('Detected Fill!')
         var percent = gameObj.commonRoles[0].value;
         gameObj.commonRoles = [];
         gameObj.commonRoles.push({ role: 'Fill', value: percent, type: 'success' })
