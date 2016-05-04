@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     },
     concat: {
       js: {
-        src: ['./client/min-safe/*.js', './client/js/*.js'],
+        src: ['./client/js/*.js', './client/min-safe/*.js'],
         dest: './client/min/splusapp.js'
       }
     },
