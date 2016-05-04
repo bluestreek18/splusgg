@@ -19,10 +19,14 @@ module.exports = function(grunt) {
       }
     },
     concat: {
-      js: {
-        src: ['./client/js/*.js', './client/min-safe/*.js'],
+      angular: {
+        src: ['./client/min-safe/*.js'],
         dest: './client/min/splusapp.js'
-      }
+      },
+      js: {
+        src: ['./client/js/*.js'],
+        dest: './client/dist/bundle.min.js'
+      },
     },
     cssmin: {
       options: {
@@ -36,9 +40,9 @@ module.exports = function(grunt) {
       }
     },
     uglify: {
-      js: { //target
+      angular: {
         src: ['./client/min/splusapp.js'],
-        dest: './client/min/splusapp.js'
+        dest: './client/dist/splusapp.min.js'
       }
     }
   });
