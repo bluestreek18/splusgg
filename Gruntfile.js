@@ -4,7 +4,9 @@ module.exports = function(grunt) {
     //grunt task configuration will go here     
     ngAnnotate: {
       options: {
-        singleQuotes: true
+        singleQuotes: true,
+        add: true,
+        separator: ';\n'
       },
       app: {
         files: {
@@ -18,15 +20,22 @@ module.exports = function(grunt) {
         }
       }
     },
+    uglify: {
+      options: {
+        mangle: false
+      },
+      angular: {
+        src: ['./client/min-safe/app.annotated.js', './client/min-safe/apis.annotated.js', './client/min-safe/teams.annotated.js', 
+        './client/min-safe/badges.annotated.js', './client/min-safe/nav.annotated.js', './client/min-safe/search.annotated.js', './client/min-safe/datastore.annotated.js'],
+        dest: './client/min/ngapp.min.js'
+      }
+    },
     concat: {
       angular: {
-        src: ['./client/min-safe/*.js'],
-        dest: './client/min/splusapp.js'
-      },
-      js: {
-        src: ['./client/js/*.js'],
-        dest: './client/dist/bundle.min.js'
-      },
+        src: ['./client/js/angular.min.js', './client/js/moment.min.js', './client/js/angular-moment.min.js', 
+        './client/js/angular-ui-router.min.js', './client/js/ui-bootstrap-tpls.min.js', './client/js/promise.min.js', './client/min/ngapp.min.js'],
+        dest: './dist/splusapp.min.js'
+      }
     },
     cssmin: {
       options: {
@@ -35,14 +44,8 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          './client/min/output.css': ['./client/css/bootstrap.css', './client/css/styles.css', './client/css/ui-bootstrap-csp.css']
+          './dist/output.css': ['./client/css/bootstrap.css', './client/css/styles.css', './client/css/ui-bootstrap-csp.css']
         }
-      }
-    },
-    uglify: {
-      angular: {
-        src: ['./client/min/splusapp.js'],
-        dest: './client/dist/splusapp.min.js'
       }
     }
   });
@@ -54,5 +57,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     //register grunt default task
-    grunt.registerTask('default', ['ngAnnotate', 'concat', 'uglify', 'cssmin']);
+    grunt.registerTask('default', ['ngAnnotate', 'uglify', 'concat', 'cssmin']);
 }

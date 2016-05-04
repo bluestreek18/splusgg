@@ -37,7 +37,13 @@ app.use(function(req, res, next) {
 	next();
 })
 
-app.use('/', express.static('client'));
+if(process.env.ENV === 'production') {
+	app.use('/', express.static('dist'));
+}
+else {
+	app.use('/', express.static('client'));
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(process.env.PORT || 3005, function() {
