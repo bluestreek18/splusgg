@@ -101,6 +101,7 @@ exports.processPlayerRecentGames = function(gameArray) {
         val.value = (val.value * 100).toFixed(0);
       })
 
+      // This doesn't work atm. Fix.
       if(gameObj.commonRoles[0] && gameObj.commonRoles[1] && (gameObj.commonRoles[0].value + gameObj.commonRoles[1].value <= 60)) {
         var percent = gameObj.commonRoles[0].value;
         gameObj.commonRoles = [];
