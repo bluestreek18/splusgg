@@ -38,6 +38,7 @@ app.use(function(req, res, next) {
 })
 
 if(process.env.ENV === 'production') {
+	console.log('ENV=production, Serving from Dist Folder!');
 	app.use('/', express.static('dist'));
 }
 else {
