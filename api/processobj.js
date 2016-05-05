@@ -34,6 +34,13 @@ exports.processPlayerRecentGames = function(gameArray) {
 
     var gameObj = {
       summonerId: gameArray.summonerId,
+      goldEarned: 0,
+      goldSpent: 0,
+      goldUnSpent: 0,
+      avgGoldSpent: 0,
+      avgDmgPerGame: 0,
+      neutralMinionsKilledEnemyJungle: 0,
+      avgNeutralMinionsKilledEnemyJungle: 0,
       gamesWon: 0,
       gamesLost: 0,
       gamesTotal: 0,
@@ -43,8 +50,13 @@ exports.processPlayerRecentGames = function(gameArray) {
       numAssists: 0,
       kda: 0,
       gameId: 0,
+      level: 0,
+      barracksKilled: 0,
+      nexusKilled: 0,
+      firstBlood: 0,
       championId: 0,
-      wardPlaced: 0
+      wardPlaced: 0,
+      wardKilled: 0
     };
 
     if(gameArray.games) {
@@ -60,6 +72,16 @@ exports.processPlayerRecentGames = function(gameArray) {
         if(val.stats.championsKilled) gameObj.numKills += val.stats.championsKilled;
         if(val.stats.wardPlaced) gameObj.wardPlaced += val.stats.wardPlaced;
         if(val.stats.assists) gameObj.numAssists += val.stats.assists;
+        if(val.stats.goldSpent) gameObj.goldSpent += val.stats.goldSpent;
+        if(val.stats.goldEarned) gameObj.goldEarned += val.stats.goldEarned;
+        if(val.stats.totalDamageDealtToChampions) gameObj.avgDmgPerGame += val.stats.totalDamageDealtToChampions;
+        if(val.stats.neutralMinionsKilledEnemyJungle) gameObj.neutralMinionsKilledEnemyJungle += val.stats.neutralMinionsKilledEnemyJungle;
+        if(val.stats.largestKillingSpree && gameObj.largestKillingSpree < val.stats.largestKillingSpree) gameObj.largestKillingSpree = val.stats.largestKillingSpree;
+        if(val.stats.wardKilled) gameObj.wardKilled += val.stats.wardKilled;
+        if(val.stats.level) gameObj.level += val.stats.level;
+        if(val.stats.nexusKilled) ++gamesObj.nexusKilled;
+        if(val.stats.barracksKilled) gameObj.barracksKilled += val.stats.barracksKilled;
+        if(val.stats.firstBlood) ++gameObj.firstBlood;
 
         gameObj.gameId = val.gameId;
         gameObj.championId = val.championId;
@@ -108,10 +130,20 @@ exports.processPlayerRecentGames = function(gameArray) {
         gameObj.commonRoles.push({ role: 'Fill', value: percent, type: 'success' })
       }
 
-      gameObj.kda = ((gameObj.numKills + gameObj.numAssists) / gameObj.numDeaths).toFixed(2);
-      gameObj.kda = Number(gameObj.kda);
       gameObj.gamesTotal = gameObj.gamesLost + gameObj.gamesWon;
+
+      gameObj.avgNeutralMinionsKilledEnemyJungle = gameObj.neutralMinionsKilledEnemyJungle / gameObj.gamesTotal;
+      gameObj.avgDmgPerGame = Number((gameObj.avgDmgPerGame / gameObj.gamesTotal).toFixed(2));
+      gameObj.goldUnSpent = gameObj.goldEarned - gameObj.goldSpent;
+      gameObj.avgGoldSpent = Number((gameObj.goldSpent / gameObj.gamesTotal).toFixed(2));
+      gameObj.avgDeaths = Number((gameObj.numDeaths / 10).toFixed(2));
+      gameObj.avgKills = Number((gameObj.numKills / 10).toFixed(2));
+      gameObj.avgAssists = Number((gameObj.numAssists / 10).toFixed(2));
+      gameObj.kda = Number(((gameObj.numKills + gameObj.numAssists) / gameObj.numDeaths).toFixed(2));
+      gameObj.kda = Number(gameObj.kda);
       gameObj.wardPlaced = gameObj.wardPlaced / gameObj.gamesTotal;
+      gameObj.wardKilled = gameObj.wardKilled / gameObj.gamesTotal;
+      gameObj.level = Number((gameObj.level / gameObj.gamesTotal).toFixed(0));
     }
     
     return gameObj;

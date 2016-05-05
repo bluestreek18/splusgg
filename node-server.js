@@ -29,7 +29,7 @@ app.use(session({
 	store: store
 }));
 
-//Fowarding from EXPRESS <-- NGINX <-- CF <-- INTERNET
+//Fowarding from EXPRESS <-- NGINX <-- CF <-- Load Balancing IP <--- INTERNET
 
 app.use(function(req, res, next) {
 	req.locals = {};

@@ -233,7 +233,6 @@ angular.module('splus.badges', [])
 
 	var checkLastTenGames = function(champ) {
 		console.log('checkLastTenGames = ', champ.recentGames)
-		debugger
 
 		if(champ.recentGames.wardPlaced > 40) {
 			champ.badges.push({ display: 'Ward\'s OP!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
@@ -252,18 +251,33 @@ angular.module('splus.badges', [])
 			champ.badges.push({ display: 'This Cheater Still Buys Wards!' + '!', tooltip: 'Averages 45749486867 Wards per Game.' });
 		}
 		
-		if(champ.recentGames.gamesWon > 10) {
+		if(champ.recentGames.gamesWon === 10) {
 			champ.badges.push({ display: 'Killionaire!', tooltip: '10 in a Row... Insane!' });
 			champ.badges.push({ display: 'Invincible!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon > 9) {
+		else if(champ.recentGames.gamesWon === 9) {
 			champ.badges.push({ display: 'Killpocalypse!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon > 8) {
+		else if(champ.recentGames.gamesWon === 8) {
 			champ.badges.push({ display: 'Killtastrophe!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon > 7) {
+		else if(champ.recentGames.gamesWon === 7) {
 			champ.badges.push({ display: 'Killimanjaro!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		}
+		else if(champ.recentGames.gamesWon === 5) {
+			champ.badges.push({ display: 'Fidy/Fidy', tooltip: '5 Won, 5 Lost of Last 10!' });
+		}
+		else if(champ.recentGames.gamesWon === 3) {
+			champ.badges.push({ display: 'Rekt!', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
+		}
+		else if(champ.recentGames.gamesWon === 2) {
+			champ.badges.push({ display: 'Loss Streak!', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
+		}
+		else if(champ.recentGames.gamesWon === 1) {
+			champ.badges.push({ display: 'Abysmal!', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
+		}
+		else if(champ.recentGames.gamesWon === 0) {
+			champ.badges.push({ display: 'Why No Dodgerino?', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
 		}
 
 		if(champ.recentGames.kda > 6) {
