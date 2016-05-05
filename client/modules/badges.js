@@ -362,7 +362,7 @@ angular.module('splus.badges', [])
 			champ.badges.push({ display: 'Wrong Jungle!', tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
 		}
 		else if(rg.avgNeutralMinionsKilledEnemyJungle > 30) {
-			champ.badges.push({ display: 'Where\'s my Minions at Bro?, tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
+			champ.badges.push({ display: 'Where\'s my Minions at Bro?', tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
 		}
 		else if(rg.avgNeutralMinionsKilledEnemyJungle > 20) {
 			champ.badges.push({ display: 'Counter Jungle King', tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
