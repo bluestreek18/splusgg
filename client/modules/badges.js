@@ -345,6 +345,9 @@ angular.module('splus.badges', [])
 			champ.badges.push({ display: 'Machine!', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
 		}
 		else if(rg.barracksKilled > 3) {
+			champ.badges.push({ display: 'The Inhibitor', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+		else if(rg.barracksKilled > 2) {
 			champ.badges.push({ display: 'Only the Nexus!', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
 		}
 
