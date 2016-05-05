@@ -232,7 +232,6 @@ angular.module('splus.badges', [])
 	}
 
 	var checkLastTenGames = function(champ) {
-		console.log('checkLastTenGames = ', champ.recentGames)
 
 		if(champ.recentGames.wardPlaced > 40) {
 			champ.badges.push({ display: 'Ward\'s OP!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
