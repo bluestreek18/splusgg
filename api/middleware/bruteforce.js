@@ -22,7 +22,6 @@ var globalb = new ExpressBrute(store, {
   refreshTimeoutOnRequest: false,
   minWait: 10*1000, 	// 1 day 1 hour (should never reach this wait time)
   maxWait: 10*1000, 	// 1 day 1 hour (should never reach this wait time)
-  lifetime: 10, 			// 1 day (seconds not milliseconds) //time to remember an ip
   failCallback: ExpressBrute.FailForbidden,
   handleStoreError: handleStoreError
 });

@@ -20,7 +20,7 @@ angular.module('splus.badges', [])
 		}
 
 		var testGamesPlayed = function(obj) {
-			if(!obj.summonerChampStats.hasOwnProperty('stats')) { 
+			if(!obj.summonerChampStats.hasOwnProperty('stats')) {
 				obj.summonerChampStats.stats = {};
 				obj.summonerChampStats.stats.winRate = '0';
 				return;
@@ -157,8 +157,8 @@ angular.module('splus.badges', [])
 	}
 
 	var getKDA = function(obj) {
-		stat = obj.summonerChampStats.stats;
-		kda = ((stat.totalAssists + stat.totalChampionKills) / stat.totalDeathsPerSession).toFixed(2);
+		var stat = obj.summonerChampStats.stats;
+		var kda = Number(((stat.totalAssists + stat.totalChampionKills) / stat.totalDeathsPerSession).toFixed(2));
 
 		if(kda > 10) {
 			obj.badges.push({ display: 'Its Over 9000!' , tooltip: kda + ' KDA' });
@@ -181,8 +181,8 @@ angular.module('splus.badges', [])
 	}
 
 	var firstBlood = function(obj) {
-		stat = obj.summonerChampStats.stats;
-		fb = (stat.totalFirstBlood / stat.totalSessionsPlayed) * 100;
+		var stat = obj.summonerChampStats.stats;
+		var fb = (stat.totalFirstBlood / stat.totalSessionsPlayed) * 100;
 
 		if(fb > 90) {
 			obj.badges.push({ display: 'Bro Pls!!?' , tooltip: fb + '% FirstBloods!' });
@@ -202,7 +202,7 @@ angular.module('splus.badges', [])
 	}
 
 	var smallStats = function(obj) {
-		stat = obj.summonerChampStats.stats;
+		var stat = obj.summonerChampStats.stats;
 		var minion = (stat.totalMinionKills / stat.totalSessionsPlayed).toFixed(0);
 		var gold = stat.totalGoldEarned / stat.totalSessionsPlayed;
 
@@ -232,65 +232,164 @@ angular.module('splus.badges', [])
 	}
 
 	var checkLastTenGames = function(champ) {
+		var rg = champ.recentGames;
 
-		if(champ.recentGames.wardPlaced > 40) {
-			champ.badges.push({ display: 'Ward\'s OP!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		if(rg.wardPlaced > 40) {
+			champ.badges.push({ display: 'Ward\'s OP!', tooltip: 'Averages ' + rg.wardPlaced + ' Wards per Game.' });
 		}
-		else if(champ.recentGames.wardPlaced > 30) {
-			champ.badges.push({ display: 'Ward Spammer!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		else if(rg.wardPlaced > 30) {
+			champ.badges.push({ display: 'Ward Spammer!', tooltip: 'Averages ' + rg.wardPlaced + ' Wards per Game.' });
 		}
-		else if(champ.recentGames.wardPlaced > 20) {
-			champ.badges.push({ display: 'Ward King!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		else if(rg.wardPlaced > 20) {
+			champ.badges.push({ display: 'Ward King!', tooltip: 'Averages ' + rg.wardPlaced + ' Wards per Game.' });
 		}
-		else if(champ.recentGames.wardPlaced > 15) {
-			champ.badges.push({ display: 'Not A Bronze Warder!' + '!', tooltip: 'Averages ' + champ.recentGames.wardPlaced + ' Wards per Game.' });
+		else if(rg.wardPlaced > 15) {
+			champ.badges.push({ display: 'Not A Bronze Warder!', tooltip: 'Averages ' + rg.wardPlaced + ' Wards per Game.' });
+		}
+
+		if(rg.wardKilled > 12) {
+			champ.badges.push({ display: 'Utter Control', tooltip: 'Averages ' + rg.wardKilled + ' Wards Killed per Game.' });
+		}
+		else if(rg.wardKilled > 10) {
+			champ.badges.push({ display: 'Master of The Map' + '!', tooltip: 'Averages ' + rg.wardKilled + ' Wards Killed per Game.' });
+		}
+		else if(rg.wardKilled > 8) {
+			champ.badges.push({ display: 'Denied' + '!', tooltip: 'Averages ' + rg.wardKilled + ' Wards Killed per Game.' });
+		}
+		else if(rg.wardKilled > 5) {
+			champ.badges.push({ display: 'Blind' + '!', tooltip: 'Averages ' + rg.wardKilled + ' Wards Killed per Game.' });
 		}
 
 		if(champ.summonerName === 'Jhin Main AMA') {
 			champ.badges.push({ display: 'This Cheater Still Buys Wards!' + '!', tooltip: 'Averages 45749486867 Wards per Game.' });
 		}
 		
-		if(champ.recentGames.gamesWon === 10) {
+		if(rg.gamesWon === 10) {
 			champ.badges.push({ display: 'Killionaire!', tooltip: '10 in a Row... Insane!' });
-			champ.badges.push({ display: 'Invincible!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+			champ.badges.push({ display: 'Invincible!', tooltip: 'Won ' + rg.gamesWon + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon === 9) {
-			champ.badges.push({ display: 'Killpocalypse!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		else if(rg.gamesWon === 9) {
+			champ.badges.push({ display: 'Killpocalypse!', tooltip: 'Won ' + rg.gamesWon + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon === 8) {
-			champ.badges.push({ display: 'Killtastrophe!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		else if(rg.gamesWon === 8) {
+			champ.badges.push({ display: 'Killtastrophe!', tooltip: 'Won ' + rg.gamesWon + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon === 7) {
-			champ.badges.push({ display: 'Killimanjaro!', tooltip: 'Won ' + champ.recentGames.gamesWon + ' of Last 10 Games!' });
+		else if(rg.gamesWon === 7) {
+			champ.badges.push({ display: 'Killimanjaro!', tooltip: 'Won ' + rg.gamesWon + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon === 5) {
+		else if(rg.gamesWon === 5) {
 			champ.badges.push({ display: 'Fidy/Fidy', tooltip: '5 Won, 5 Lost of Last 10!' });
 		}
-		else if(champ.recentGames.gamesWon === 3) {
-			champ.badges.push({ display: 'Rekt!', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
+		else if(rg.gamesWon === 3) {
+			champ.badges.push({ display: 'Rekt!', tooltip: 'Lost ' + rg.gamesLost + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon === 2) {
-			champ.badges.push({ display: 'Loss Streak!', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
+		else if(rg.gamesWon === 2) {
+			champ.badges.push({ display: 'Loss Streak!', tooltip: 'Lost ' + rg.gamesLost + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon === 1) {
-			champ.badges.push({ display: 'Abysmal!', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
+		else if(rg.gamesWon === 1) {
+			champ.badges.push({ display: 'Abysmal!', tooltip: 'Lost ' + rg.gamesLost + ' of Last 10 Games!' });
 		}
-		else if(champ.recentGames.gamesWon === 0) {
-			champ.badges.push({ display: 'Why No Dodgerino?', tooltip: 'Lost ' + champ.recentGames.gamesLost + ' of Last 10 Games!' });
+		else if(rg.gamesWon === 0) {
+			champ.badges.push({ display: 'Why No Dodgerino?', tooltip: 'Lost ' + rg.gamesLost + ' of Last 10 Games!' });
 		}
 
-		if(champ.recentGames.kda > 6) {
-			champ.badges.push({ display: 'Perfection!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		if(rg.kda > 6) {
+			champ.badges.push({ display: 'Perfection!', tooltip: rg.kda + ' KDA Over the Last 10 Games!' });
 		}
-		else if(champ.recentGames.kda > 5) {
-			champ.badges.push({ display: 'Hail to the King!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		else if(rg.kda > 5) {
+			champ.badges.push({ display: 'Hail to the King!', tooltip: rg.kda + ' KDA Over the Last 10 Games!' });
 		}
-		else if(champ.recentGames.kda > 4) {
-			champ.badges.push({ display: 'Rampage!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		else if(rg.kda > 4) {
+			champ.badges.push({ display: 'Rampage!', tooltip: rg.kda + ' KDA Over the Last 10 Games!' });
 		}
-		else if(champ.recentGames.kda > 3) {
-			champ.badges.push({ display: 'Open Season!', tooltip: champ.recentGames.kda + ' KDA Over the Last 10 Games!' });
+		else if(rg.kda > 3) {
+			champ.badges.push({ display: 'Open Season!', tooltip: rg.kda + ' KDA Over the Last 10 Games!' });
 		}
+
+		if(rg.level > 16) {
+			champ.badges.push({ display: 'Level UP!', tooltip: 'Ends Most Games at Level ' + rg.level });
+		}
+
+		if(rg.firstBlood > 7) {
+			champ.badges.push({ display: 'Dead Already?', tooltip: 'Got First Blood ' + rg.firstBlood + ' of the Last 10 Games' });
+		}
+		else if(rg.firstBlood > 6) {
+			champ.badges.push({ display: 'Blood Rampage', tooltip: 'Got First Blood ' + rg.firstBlood + ' of the Last 10 Games' });
+		}
+		else if(rg.firstBlood > 5) {
+			champ.badges.push({ display: 'Hyper Aggression', tooltip: 'Got First Blood ' + rg.firstBlood + ' of the Last 10 Games' });
+		}
+		else if(rg.firstBlood > 4) {
+			champ.badges.push({ display: 'Blood King', tooltip: 'Got First Blood ' + rg.firstBlood + ' of the Last 10 Games' });
+		}
+		else if(rg.firstBlood > 3) {
+			champ.badges.push({ display: 'Play Maker', tooltip: 'Got First Blood ' + rg.firstBlood + ' of the Last 10 Games' });
+		}
+
+		if(rg.barracksKilled > 9) {
+			champ.badges.push({ display: 'D Gates!', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+		else if(rg.barracksKilled > 8) {
+			champ.badges.push({ display: 'Sir HC EZ?', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+		else if(rg.barracksKilled > 7) {
+			champ.badges.push({ display: 'Trick2g?', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+		else if(rg.barracksKilled > 6) {
+			champ.badges.push({ display: 'BackDoorKing!', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+		else if(rg.barracksKilled > 5) {
+			champ.badges.push({ display: 'xPeke', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+		else if(rg.barracksKilled > 4) {
+			champ.badges.push({ display: 'Machine!', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+		else if(rg.barracksKilled > 3) {
+			champ.badges.push({ display: 'Only the Nexus!', tooltip: 'Destroyed ' + rg.barracksKilled + ' Inhibitors over the Last 10 Games' });
+		}
+
+		if(rg.nexusKilled > 4) {
+			champ.badges.push({ display: 'No Gate', tooltip: 'Ended ' + rg.nexusKilled + ' Games of the Last 10!' });
+		}
+		else if(rg.nexusKilled > 3) {
+			champ.badges.push({ display: '+50g', tooltip: 'Ended ' + rg.nexusKilled + ' Games of the Last 10!' });
+		}
+		else if(rg.nexusKilled > 2) {
+			champ.badges.push({ display: 'I Win', tooltip: 'Ended ' + rg.nexusKilled + ' Games of the Last 10!' });
+		}
+
+		if(rg.avgNeutralMinionsKilledEnemyJungle > 40) {
+			champ.badges.push({ display: 'Wrong Jungle!', tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
+		}
+		else if(rg.avgNeutralMinionsKilledEnemyJungle > 30) {
+			champ.badges.push({ display: 'Where\'s my Minions at Bro?, tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
+		}
+		else if(rg.avgNeutralMinionsKilledEnemyJungle > 20) {
+			champ.badges.push({ display: 'Counter Jungle King', tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
+		}
+		else if(rg.avgNeutralMinionsKilledEnemyJungle > 15) {
+			champ.badges.push({ display: 'King of the Jungle', tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
+		}
+		else if(rg.avgNeutralMinionsKilledEnemyJungle > 10) {
+			champ.badges.push({ display: 'Stalker', tooltip: 'Averaged ' + rg.avgNeutralMinionsKilledEnemyJungle + ' Minions Killed in Enemy Jungle over the Last 10 Games' });
+		}
+
+		if(rg.avgGoldSpent > 20000) {
+			champ.badges.push({ display: 'I\'m Rich Bitch', tooltip: 'Averages ' + rg.avgGoldSpent + ' Gold Spent Per Game!' });
+		}
+		if(rg.avgGoldSpent > 18000) {
+			champ.badges.push({ display: 'Big Spender', tooltip: 'Averages ' + rg.avgGoldSpent + ' Gold Spent Per Game!' });
+		}
+		if(rg.avgGoldSpent > 16000) {
+			champ.badges.push({ display: '7 Items?', tooltip: 'Averages ' + rg.avgGoldSpent + ' Gold Spent Per Game!' });
+		}
+		if(rg.avgGoldSpent > 15000) {
+			champ.badges.push({ display: 'I Shop at Harrods', tooltip: 'Averages ' + rg.avgGoldSpent + ' Gold Spent Per Game!' });
+		}
+		if(rg.avgGoldSpent > 14000) {
+			champ.badges.push({ display: 'Bronze Coins', tooltip: 'Averages ' + rg.avgGoldSpent + ' Gold Spent Per Game!' });
+		}
+
 
 	}
 
