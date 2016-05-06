@@ -27,7 +27,8 @@
     "mongoose": "^4.4.10",
     "please-wait": "0.0.5",
     "promise-polyfill": "^5.0.0",
-    "request": "^2.69.0"
+    "request": "^2.69.0",
+    "spinkit": "^1.2.5"
   },
   "devDependencies": {
     "grunt-contrib-concat": "^1.0.1",
