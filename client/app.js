@@ -28,7 +28,8 @@ angular.module('splus', [
 .run(function ($rootScope, $location) {
   $rootScope.$on("$locationChangeStart",function(event, next, current) {
     console.log('next == ', next, typeof next, next === 'http://localhost:3005/#/teams')
-    if(next === 'http://localhost:3005/#/teams') {
+    var url = next.split('/');
+    if(url[url.length - 1] === 'teams') {
       console.log('Activating Please Wait!')
       window.loading_screen = window.pleaseWait({
         logo: "/img/logo.png",
