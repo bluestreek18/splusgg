@@ -36,7 +36,7 @@ module.exports = function(grunt) {
     concat: {
       angular: {
         src: ['./client/js/angular.min.js', './client/js/moment.min.js', './client/js/angular-moment.min.js', 
-        './client/js/angular-ui-router.min.js', './client/js/ui-bootstrap-tpls.min.js', './client/js/promise.min.js', './client/min/ngapp.min.js'],
+        './client/js/angular-ui-router.min.js', './client/js/ui-bootstrap-tpls.min.js', './client/js/promise.min.js', './client/min/ngapp.min.js', './client/js/please-wait.min.js'],
         dest: './dist/splusapp.min.js'
       }
     },
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          './dist/output.css': ['./client/css/bootstrap.css', './client/css/styles.css', './client/css/ui-bootstrap-csp.css']
+          './dist/output.css': ['./client/css/bootstrap.css', './client/css/styles.css', './client/css/ui-bootstrap-csp.css', './client/css/please-wait.css', './client/css/opensans.css']
         }
       }
     }

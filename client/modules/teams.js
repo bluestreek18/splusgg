@@ -77,7 +77,7 @@ angular.module('splus.teams', [])
 				console.log(err);
 			})
 			.then(function(matchupArray) {
-				// window.loading_screen.finish();
+				window.loading_screen.finish();
 				return BuildData.processMatchupData(matchupArray);
 			})
 			.then(function(data) {

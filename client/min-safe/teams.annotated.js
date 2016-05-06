@@ -1,5 +1,6 @@
 angular.module('splus.teams', [])
 	.controller('TeamController', ['$rootScope', '$scope', 'DataHandler', 'BuildData', 'Badges', 'APIs', function($rootScope, $scope, DataHandler, BuildData, Badges, APIs) {
+		// window.loading_screen.pleaseWait();
 		var gameData = DataHandler.gameData;
 		$scope.data = gameData.data;
 		$scope.matchups = DataHandler.matchups;
@@ -76,6 +77,7 @@ angular.module('splus.teams', [])
 				console.log(err);
 			})
 			.then(function(matchupArray) {
+				window.loading_screen.finish();
 				return BuildData.processMatchupData(matchupArray);
 			})
 			.then(function(data) {

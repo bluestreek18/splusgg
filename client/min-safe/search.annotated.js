@@ -4,6 +4,18 @@ angular.module('splus.search', [])
 		$scope.text = '';
 		$scope.error = '';
 
+		// Reset this on loading back the search page.
+		DataHandler.gameData = {};
+		DataHandler.matchups = [];
+		DataHandler.blueteam = [];
+		DataHandler.redteam = [];
+		DataHandler.bluebans = [];
+		DataHandler.redbans = [];
+		DataHandler.primaryPlayer = {
+			name: undefined,
+			tier: undefined
+		};
+
 		$scope.submit = function() {
 		if($scope.text !== undefined && typeof $scope.text === 'string') {
 			var noSpaces = $scope.text;
@@ -21,9 +33,9 @@ angular.module('splus.search', [])
 				}
 			}).catch(function(err) {
 				console.log('catch err! = ', err);
-				$scope.error = 'Summoner Not in Game!';
+				$scope.error = 'Summoner Not in Ranked Game!';
 			})
-
 		}
 	}
+
 }])
