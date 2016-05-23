@@ -27,6 +27,7 @@
     "mongoose": "^4.4.10",
     "please-wait": "0.0.5",
     "promise-polyfill": "^5.0.0",
+    "redis": "^2.6.0-2",
     "request": "^2.69.0",
     "spinkit": "^1.2.5"
   },

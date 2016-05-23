@@ -1,13 +1,9 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var Riot = require('./api/riot');
 var db = require('./api/database');
-var Logic = require('./api/middleware/serverlogic');
-var ChampGG = require('./api/championgg');
 var session = require('express-session');
 var Brute = require('./api/middleware/bruteforce');
-var RiotRouter = express.Router();
 
 app.enable('trust proxy');
 app.disable('x-powered-by');
@@ -28,6 +24,10 @@ app.use(session({
 	cookie: { secure: 'auto' },
 	store: store
 }));
+
+//Routers
+var RiotRouter = require('./routes/riotroutes.js');
+var TwitchRouter = require('./routes/twitchroutes.js');
 
 //Fowarding from EXPRESS <-- NGINX <-- CF <-- Load Balancing IP <--- INTERNET
 
@@ -52,75 +52,4 @@ app.listen(process.env.PORT || 3005, function() {
 });
 
 app.use('/riot/', RiotRouter, Brute);  //Rate limit global riot api
-
-
-app.get('/riot/initialgamedata', function(req, res) {
-	Logic.getSummonerGame(req.query.name).then(function(data) {
-		res.send(data);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
-
-});
-
-app.get('/riot/summonerchampionstats', function(req, res) {
-	Riot.getSummonerChampionStats(req.query.id, req.query.champid).then(function(champdata) {
-		res.send(champdata);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
-
-});
-
-app.get('/api/championstaticdata', function(req, res) {
-	Logic.getStaticAll(req.query.champNames).then(function(results) {
-		res.send(results);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
-
-});
-
-app.get('/riot/summonerleaguedata', function(req, res) {
-	Riot.getSummonerLeagueData(req.query.ids).then(function(data) {
-		res.send(data);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
-
-});
-
-app.get('/api/champmatchupdatagg', function(req, res) {
-	ChampGG.getChampionMatchupData(req.query.name1, req.query.name2).then(function(data) {
-		res.send(data);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
-
-});
-
-
-app.get('/riot/getsummrecentgames', function(req, res) {
-	Riot.getRecentGames(req.query.id).then(function(data) {
-		res.send(data);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
-
-});
-
-app.get('/riot/ddversion', function(req, res) {	//Riot static data api, doesn't count toward rate limit.
-	Riot.getDDVersion().then(function(data) {
-		res.send(data);
-	})
-	.catch(function(err) {
-		res.send(err);
-	})
-
-});
+app.use('/twitch/', TwitchRouter);
